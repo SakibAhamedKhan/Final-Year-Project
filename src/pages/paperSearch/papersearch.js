@@ -1,6 +1,6 @@
 import ConvertTime from "./converttime";
 import image1 from '../../assets/img/Sakib.jpeg'
-import { MdOutlineTravelExplore } from 'react-icons/md'
+import { MdOutlineTravelExplore, MdOutlinePublish } from 'react-icons/md'
 import { useEffect, useState } from "react";
 import paper from '../../data/paper.json'
 
@@ -23,13 +23,13 @@ function PaperSearch() {
         }
         );
         setData(filteredData);
-        
+        setWaitForData(true);
     }, [searchTyped])
 
     const searchInput = event => {
-        console.log(event.target.value);
+        setWaitForData(false);
         setSearchTyped(event.target.value);
-
+        
     }
 
     return (
@@ -37,8 +37,10 @@ function PaperSearch() {
             {/* Search Input Section */}
             <div className="self-center w-[600px]">
                 <input type="text" onChange={searchInput} placeholder="Search here..." class="input input-bordered input-sm w-full border-0 focus:outline-0 drop-shadow-md rounded-[5px]" />
+                <p className="mb-[-20px] mt-[20px] text-gray-400">{data.length} result showing now</p>
             </div>
 
+            
             {/* Search Results */}
             <div className="self-center w-[600px]">
                 {
