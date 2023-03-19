@@ -2,8 +2,9 @@
     "data":[
         {
             "_id":1,
-            "question":"How can improve my skill in research?",
+            "question":"How can improve my skill in research? How can I manage this on time?",
             "date": 1807110465663,
+            "solve":"yes",
             "user":{
                 "_id":1001,
                 "name":"Rakib Hasan"
@@ -33,6 +34,7 @@
             "_id":2,
             "question":"I don't understand this field more?",
             "date": 1201110425663,
+            "solve": "running",
             "user":{
                 "_id":1005,
                 "name":"Yasin Hasan"
@@ -47,6 +49,108 @@
                         "_id":1002
                     }
                 }
+            ]
+        },
+        {
+            "_id":3,
+            "question":"How can improve my skill in research? How can I manage this on time?",
+            "date": 1807110465663,
+            "solve":"no",
+            "user":{
+                "_id":1001,
+                "name":"Rakib Hasan"
+            },
+            "comments":[
+                {
+                    "upvote":100,
+                    "downvote":5,
+                    "comment":"You can follow the following steps.",
+                    "commentedUser":{
+                        "commentedName":"Sakib Ahamed Khan",
+                        "_id":1002
+                    }
+                },
+                {
+                    "upvote":50,
+                    "downvote":2,
+                    "comment":"The best way you can do more read paper on such a field and get more experience on that.",
+                    "commentedUser":{
+                        "commentedName":"Sakib Ahamed Khan",
+                        "_id":1002
+                    }
+                }
+            ]
+        },
+        {
+            "_id":4,
+            "question":"I don't understand this field more?",
+            "date": 1201110425663,
+            "solve":"no_answered",
+            "user":{
+                "_id":1005,
+                "name":"Yasin Hasan"
+            },
+            "comments":[
+            ]
+        },
+        {
+            "_id":4,
+            "question":"I don't understand this field more?",
+            "date": 1201110425663,
+            "solve":"no_answered",
+            "user":{
+                "_id":1005,
+                "name":"Yasin Hasan"
+            },
+            "comments":[
+            ]
+        },
+        {
+            "_id":4,
+            "question":"I don't understand this field more?",
+            "date": 1201110425663,
+            "solve":"no_answered",
+            "user":{
+                "_id":1005,
+                "name":"Yasin Hasan"
+            },
+            "comments":[
+            ]
+        },
+        {
+            "_id":4,
+            "question":"I don't understand this field more?",
+            "date": 1201110425663,
+            "solve":"no_answered",
+            "user":{
+                "_id":1005,
+                "name":"Yasin Hasan"
+            },
+            "comments":[
+            ]
+        },
+        {
+            "_id":4,
+            "question":"I don't understand this field more?",
+            "date": 1201110425663,
+            "solve":"no_answered",
+            "user":{
+                "_id":1005,
+                "name":"Yasin Hasan"
+            },
+            "comments":[
+            ]
+        },
+        {
+            "_id":4,
+            "question":"I don't understand this field more?",
+            "date": 1201110425663,
+            "solve":"no_answered",
+            "user":{
+                "_id":1005,
+                "name":"Yasin Hasan"
+            },
+            "comments":[
             ]
         }
     ]
