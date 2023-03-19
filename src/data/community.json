@@ -1,0 +1,53 @@
+{
+    "data":[
+        {
+            "_id":1,
+            "question":"How can improve my skill in research?",
+            "date": 1807110465663,
+            "user":{
+                "_id":1001,
+                "name":"Rakib Hasan"
+            },
+            "comments":[
+                {
+                    "upvote":100,
+                    "downvote":5,
+                    "comment":"You can follow the following steps.",
+                    "commentedUser":{
+                        "commentedName":"Sakib Ahamed Khan",
+                        "_id":1002
+                    }
+                },
+                {
+                    "upvote":50,
+                    "downvote":2,
+                    "comment":"The best way you can do more read paper on such a field and get more experience on that.",
+                    "commentedUser":{
+                        "commentedName":"Sakib Ahamed Khan",
+                        "_id":1002
+                    }
+                }
+            ]
+        },
+        {
+            "_id":2,
+            "question":"I don't understand this field more?",
+            "date": 1201110425663,
+            "user":{
+                "_id":1005,
+                "name":"Yasin Hasan"
+            },
+            "comments":[
+                {
+                    "upvote":46,
+                    "downvote":2,
+                    "comment":"Read more and more about this field",
+                    "commentedUser":{
+                        "commentedName":"Sakib Ahamed Khan",
+                        "_id":1002
+                    }
+                }
+            ]
+        }
+    ]
+}
