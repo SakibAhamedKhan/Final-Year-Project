@@ -13,11 +13,11 @@ class App extends Component {
   render() {
     return (
       <div className='flex flex-row'>
-        <div className="basis-2/12 border-r h-screen border-black" >
+        <div className="basis-2/12 border-r-2 h-screen border-gray-200" >
           <Navbar />
         </div>
 
-        <div className="w-full">
+        <div className="w-full bg-gray-100">
           <Routes >
             <Route path='/' element={<Newsfeed></Newsfeed>}></Route>
             <Route path='/papersearch' element={<PaperSearch></PaperSearch>}></Route>

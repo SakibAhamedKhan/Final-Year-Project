@@ -1,4 +1,5 @@
 import NewsFeedPost from "./newsfeedpost";
+import image1 from '../../assets/img/Sakib.jpeg'
 
 function Newsfeed() {
 
@@ -8,12 +9,12 @@ function Newsfeed() {
         <div className="p-8 flex flex-col overflow-y-scroll h-screen">
             {/* ############################### Modal of Post ##################################### */}
             <div className="self-center w-[600px]">
-                <label htmlFor="my-modal-3" className="btn btn-block btn-sm btn-outline capitalize rounded-[5px] max-w-xl">Post Your Idea</label>
+                <label htmlFor="my-modal-3" className="btn btn-block btn-sm bg-white text-black hover:text-gray-400 hover:bg-white border-0 drop-shadow-md capitalize rounded-[5px] max-w-xl">Post Your Idea</label>
 
                 {/* Put this part before </body> tag */}
                 <input type="checkbox" id="my-modal-3" className="modal-toggle" />
                 <div className="modal">
-                    <div className="modal-box relative p-0 rounded-md">
+                    <div className="modal-box relative p-0 rounded-[5px]">
                         <div className="flex  justify-center ">
                             <label htmlFor="my-modal-3" className="btn btn-xs btn-circle absolute right-3 top-3 text-white">x</label>
                             <h2 className="mt-[12px] font-semibold">Create a Post</h2>
@@ -22,7 +23,7 @@ function Newsfeed() {
                         <div className="flex items-center px-4 pb-4">
                             <div className="avatar">
                                 <div className="w-6 rounded-full">
-                                    <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    <img src={`${image1}`} />
                                 </div>
                             </div>
                             <div className="ml-2">
