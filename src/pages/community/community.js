@@ -13,7 +13,7 @@ function Community() {
         setLoading(false);
     })
     return (
-        <div className="p-8 flex flex-col overflow-y-scroll h-screen">
+        <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
             <h2 className="text-center font-bold text-xl">Community Help</h2>
             
             <button className="btn btn-circle absolute bottom-10 right-10 z-10">

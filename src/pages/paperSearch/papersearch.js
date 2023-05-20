@@ -1,6 +1,6 @@
 import ConvertTime from "./converttime";
 import image1 from '../../assets/img/Sakib.jpeg'
-import { MdOutlineTravelExplore, MdOutlinePublish } from 'react-icons/md'
+import { MdOutlineTravelExplore } from 'react-icons/md'
 import { useEffect, useState } from "react";
 import paper from '../../data/paper.json'
 
@@ -33,7 +33,7 @@ function PaperSearch() {
     }
 
     return (
-        <div className="p-8 flex flex-col overflow-y-scroll h-screen">
+        <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
             {/* Search Input Section */}
             <div className="self-center w-[600px]">
                 <input type="text" onChange={searchInput} placeholder="Search here..." class="input input-bordered input-sm w-full border-0 focus:outline-0 drop-shadow-md rounded-[5px]" />

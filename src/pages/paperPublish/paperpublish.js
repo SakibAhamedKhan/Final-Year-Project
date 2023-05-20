@@ -2,7 +2,7 @@ import publishImage from '../../assets/undraw/publish.svg'
 import {MdOutlinePublish} from 'react-icons/md';
 function PaperPublish() {
     return (
-        <div className="p-8 flex flex-col overflow-y-scroll h-screen">
+        <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
             <h2 className="text-center font-bold text-xl">Request Your Paper For Publish</h2>
             <div className="self-center w-[600px] ">
                 <div className="card bg-base-100 drop-shadow-md my-5 rounded-[5px] px-6 py-10">

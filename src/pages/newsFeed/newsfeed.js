@@ -6,7 +6,7 @@ function Newsfeed() {
 
 
     return (
-        <div className="p-8 flex flex-col overflow-y-scroll h-screen">
+        <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
             {/* ############################### Modal of Post ##################################### */}
             <div className="self-center w-[600px]">
                 <label htmlFor="my-modal-3" className="btn btn-block btn-sm bg-white text-black hover:text-gray-400 hover:bg-white border-0 drop-shadow-md capitalize rounded-[5px] max-w-xl">Post Your Idea</label>
