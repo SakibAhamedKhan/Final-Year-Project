@@ -9,6 +9,7 @@ import Community from './pages/community/community';
 import Profile from './pages/profile/profile';
 import Newsfeed from './pages/newsFeed/newsfeed';
 import UpperNavbar from './pages/shared/upperNavbar';
+import Login from './pages/account/login';
 
 class App extends Component {  
   render() {
@@ -17,7 +18,7 @@ class App extends Component {
     return (
       <Home/>
     );
-  }
+  } 
 }
 
 export default App;

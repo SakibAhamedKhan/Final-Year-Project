@@ -9,7 +9,7 @@ function Profile() {
         setUser(User);
     })
     return (
-        <div className="p-8 flex flex-col overflow-y-scroll h-screen">
+        <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
             <div className="card bg-base-100 drop-shadow-md rounded-[5px] p-8">
                 <h2 className="mb-4 font-semibold text-xl">Welcome, {user.name}</h2>
                 <div className="mb-4">
