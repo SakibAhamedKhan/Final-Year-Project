@@ -11,6 +11,22 @@ function UpperNavbar(props) {
     const changeShow = () => {
         setShow(!show);
     }
+
+    const logout = async() => {
+        fetch(`http://localhost:8000/api/v1/user/logout`,{
+            method: 'PATCH',
+            headers:{
+                'content-type':'application/json'
+            },
+            body: JSON.stringify({id: localStorage.getItem('userId')})
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            localStorage.removeItem("userId");
+            navigate('/login');
+        })
+    }
     return (
         <div className="bg-base-100 h-[50px] flex flex-row justify-between px-4">
             <div className="">
@@ -55,8 +71,8 @@ function UpperNavbar(props) {
                             </div>
                         </li>
                         <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full w-full">
-                            <div onClick={()=>{navigate('/profile')}} className="flex flex-row items-center">
-                            <div className="text-lg pr-2"><RiLogoutBoxRFill /></div>
+                            <div onClick={logout} className="flex flex-row items-center">
+                            <div  className="text-lg pr-2"><RiLogoutBoxRFill /></div>
                             <div>Log out</div>
                             </div>
                         </li>

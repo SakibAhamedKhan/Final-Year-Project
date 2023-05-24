@@ -2,8 +2,12 @@ import publishImage from '../../assets/undraw/publish.svg'
 import {MdOutlinePublish} from 'react-icons/md';
 import Navbar from '../shared/navbar';
 import UpperNavbar from '../shared/upperNavbar';
+import userAuth from '../../hooks/userAuth';
 function PaperPublish(props) {
     const {show, setShow} = props;
+    const [user] = userAuth();
+    
+    console.log(user);
 
     return (
         <div className='flex flex-row'>

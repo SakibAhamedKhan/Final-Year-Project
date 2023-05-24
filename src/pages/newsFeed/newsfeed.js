@@ -2,11 +2,26 @@ import NewsFeedPost from "./newsfeedpost";
 import image1 from '../../assets/img/Sakib.jpeg'
 import Navbar from "../shared/navbar";
 import UpperNavbar from "../shared/upperNavbar";
+import userAuth from "../../hooks/userAuth";
+import { useNavigate } from "react-router-dom";
+import UserAuthLoadingPage from "../shared/userAuthLoadingPage";
 
 function Newsfeed(props) {
     const {show, setShow} = props;
-
-
+    const [user, userAuthLoaading] = userAuth();
+    const navigate = useNavigate();
+    
+    console.log(user);
+    if(userAuthLoaading===false){
+        if(user?.status==="fail"){
+            navigate('/login');
+        }
+    } else {
+        return (
+            <UserAuthLoadingPage show={show} setShow={setShow}/>
+        )
+    }
+   
     return (
         <div className='flex flex-row'>
             <div className={`${show? '': 'bg-white w-[50px]'} border-r-2 h-screen border-gray-2001`} >
@@ -17,7 +32,7 @@ function Newsfeed(props) {
                 <div className='h-[40px] bg-white w-full drop-shadow-md absolute z-10'>
                     <UpperNavbar show={show} setShow={setShow}/>
                 </div>
-                <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
+                    <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
                     {/* ############################### Modal of Post ##################################### */}
                     <div className="self-center w-[600px]">
                         <label htmlFor="my-modal-3" className="btn btn-block btn-sm bg-white text-black hover:text-gray-400 hover:bg-white border-0 drop-shadow-md capitalize rounded-[5px] max-w-xl">Post Your Idea</label>
@@ -58,6 +73,8 @@ function Newsfeed(props) {
 
 
                 </div>
+                
+                
             </div>
         </div>
        
