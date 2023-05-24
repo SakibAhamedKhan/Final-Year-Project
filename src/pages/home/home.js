@@ -16,8 +16,8 @@ function Home() {
     return (
         <div>
             <Routes>
-                <Route path='/' element={<Newsfeed show={show} setShow={setShow}></Newsfeed>}></Route>
-                <Route path='papersearch' element={<PaperSearch show={show} setShow={setShow}></PaperSearch>}></Route>
+                <Route path='/newsFeed' element={<Newsfeed show={show} setShow={setShow}></Newsfeed>}></Route>
+                <Route path='/' element={<PaperSearch show={show} setShow={setShow}></PaperSearch>}></Route>
                 <Route path='paperpublish' element={<PaperPublish show={show} setShow={setShow}></PaperPublish>}></Route>
                 <Route path='community' element={<Community show={show} setShow={setShow}></Community>}></Route>
                 <Route path='profile' element={<Profile show={show} setShow={setShow}></Profile>}></Route>

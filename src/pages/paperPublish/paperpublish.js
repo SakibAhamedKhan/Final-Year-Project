@@ -3,11 +3,24 @@ import {MdOutlinePublish} from 'react-icons/md';
 import Navbar from '../shared/navbar';
 import UpperNavbar from '../shared/upperNavbar';
 import userAuth from '../../hooks/userAuth';
+import { useNavigate } from 'react-router-dom';
+import UserAuthLoadingPage from '../shared/userAuthLoadingPage';
+import ToLoginAlert from '../shared/toLoginAlert';
 function PaperPublish(props) {
     const {show, setShow} = props;
-    const [user] = userAuth();
-    
-    console.log(user);
+    const [user, userAuthLoaading] = userAuth();
+    const navigate = useNavigate();
+
+    if(userAuthLoaading==false){
+        if(user?.status=='fail'){
+            console.log("DOne done ");
+            return <ToLoginAlert show={show} setShow={setShow} message={`Please login to see publish paper page!`}/>
+        }
+    } else {
+        return (
+            <UserAuthLoadingPage show={show} setShow={setShow}/>
+        )
+    }
 
     return (
         <div className='flex flex-row'>

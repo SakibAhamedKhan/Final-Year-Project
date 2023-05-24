@@ -5,16 +5,17 @@ import UpperNavbar from "../shared/upperNavbar";
 import userAuth from "../../hooks/userAuth";
 import { useNavigate } from "react-router-dom";
 import UserAuthLoadingPage from "../shared/userAuthLoadingPage";
+import ToLoginAlert from "../shared/toLoginAlert";
 
 function Newsfeed(props) {
     const {show, setShow} = props;
     const [user, userAuthLoaading] = userAuth();
     const navigate = useNavigate();
     
-    console.log(user);
-    if(userAuthLoaading===false){
-        if(user?.status==="fail"){
-            navigate('/login');
+    if(userAuthLoaading==false){
+        if(user?.status=='fail'){
+            console.log("DOne done ");
+            return <ToLoginAlert show={show} setShow={setShow} message={`Please login to see news feed page!`}/>
         }
     } else {
         return (

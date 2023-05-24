@@ -3,15 +3,19 @@ import image1 from './../../assets/img/Sakib.jpeg';
 import {RiLogoutBoxRFill} from "react-icons/ri"
 import {AiFillSetting} from "react-icons/ai"
 import {CgProfile} from "react-icons/cg"
+import userAuth from "../../hooks/userAuth";
 
 function UpperNavbar(props) {
     const {show, setShow} = props;
     const navigate = useNavigate();
+    const [user, userAuthLoaading, refetch] = userAuth();
 
     const changeShow = () => {
         setShow(!show);
     }
 
+    console.log(user);
+    
     const logout = async() => {
         fetch(`http://localhost:8000/api/v1/user/logout`,{
             method: 'PATCH',
@@ -22,9 +26,9 @@ function UpperNavbar(props) {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             localStorage.removeItem("userId");
-            navigate('/login');
+            refetch();
+            return navigate('/login');
         })
     }
     return (
@@ -51,34 +55,42 @@ function UpperNavbar(props) {
                 </ul>
             </div>
             <div className="justify-self-end">
-                  <div className="dropdown dropdown-end">
-                    <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                        <div className="w-[25px] rounded-full">
-                        <img src={image1} />
-                        </div>
-                    </label>
-                    <ul tabIndex={0} className="mt-3 p-2 shadow dropdown-content bg-base-100 rounded-box w-40">
-                        <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full">
-                            <div onClick={()=>{navigate('/profile')}} className="flex flex-row items-center">
-                            <div className="text-lg pr-2"><CgProfile /></div>
-                            <div>Profile</div>
+                {user?.status=='success' ?
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                            <div className="w-[25px] rounded-full">
+                            <img src={image1} />
                             </div>
-                        </li>
-                        <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full w-full">
-                            <div onClick={()=>{navigate('/profile')}} className="flex flex-row items-center">
-                            <div className="text-lg pr-2"><AiFillSetting /></div>
-                            <div>Settings</div>
-                            </div>
-                        </li>
-                        <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full w-full">
-                            <div onClick={logout} className="flex flex-row items-center">
-                            <div  className="text-lg pr-2"><RiLogoutBoxRFill /></div>
-                            <div>Log out</div>
-                            </div>
-                        </li>
-                        </ul>
+                        </label>
+                        <ul tabIndex={0} className="mt-3 p-2 shadow dropdown-content bg-base-100 rounded-box w-40">
+                            <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full">
+                                <div onClick={()=>{navigate('/profile')}} className="flex flex-row items-center">
+                                <div className="text-lg pr-2"><CgProfile /></div>
+                                <div>Profile</div>
+                                </div>
+                            </li>
+                            <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full w-full">
+                                <div className="flex flex-row items-center">
+                                <div className="text-lg pr-2"><AiFillSetting /></div>
+                                <div>Settings</div>
+                                </div>
+                            </li>
+                            <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full w-full">
+                                <div onClick={logout} className="flex flex-row items-center">
+                                <div  className="text-lg pr-2"><RiLogoutBoxRFill /></div>
+                                <div>Log out</div>
+                                </div>
+                            </li>
+                            </ul>
                     </div>
-                </div>
+                    :
+                    <div onClick={()=> {navigate('/login')}}
+                    className="btn btn-sm my-2  btn-outline rounded-[5px] capitalize"
+                    >
+                        Login
+                    </div>
+                }
+            </div>
     </div>
     );
 }

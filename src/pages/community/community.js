@@ -11,6 +11,8 @@ function Community(props) {
     const [loading, setLoading] = useState(true);
     const {show, setShow} = props;
 
+    
+
     useEffect(() => {
         setData(communityData.data);
         setLoading(false);

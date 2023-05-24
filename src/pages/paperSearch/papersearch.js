@@ -5,12 +5,20 @@ import { useEffect, useState } from "react";
 import paper from '../../data/paper.json'
 import Navbar from "../shared/navbar";
 import UpperNavbar from "../shared/upperNavbar";
+import userAuth from "../../hooks/userAuth";
+import { useNavigate } from "react-router-dom";
+import UserAuthLoadingPage from "../shared/userAuthLoadingPage";
 
 function PaperSearch(props) {
     const [data, setData] = useState([]);
     const [waitForData, setWaitForData] = useState(false);
     const [searchTyped, setSearchTyped] = useState('');
     const {show, setShow} = props;
+
+    //const [user, userAuthLoaading] = userAuth();
+    //const navigate = useNavigate();
+
+   
 
     useEffect(() => {
         setData(paper.data);
@@ -27,6 +35,20 @@ function PaperSearch(props) {
         setData(filteredData);
         setWaitForData(true);
     }, [searchTyped])
+
+    /* 
+        User Auth Part (Paper search don't need to protect for login) 
+    */
+    // if(userAuthLoaading==false){
+    //     if(user?.status=='fail'){
+    //         console.log("DOne done ");
+    //         return navigate('/login');
+    //     }
+    // } else {
+    //     return (
+    //         <UserAuthLoadingPage show={show} setShow={setShow}/>
+    //     )
+    // }
 
     const searchInput = event => {
         setWaitForData(false);

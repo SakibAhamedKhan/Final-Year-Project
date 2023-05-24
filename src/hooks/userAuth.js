@@ -6,10 +6,11 @@ const userAuth = () => {
     let id = localStorage.getItem('userId');
     console.log(`User id is: ${id}`);
     
-    if(id==null){
-        return [{status: "fail"}, false]
-    } 
+    
     const {data: user, isLoading: userAuthLoaading, refetch} = useQuery('userAuth', () => {
+        if(id==null){ 
+            return {status: "fail"}
+        } 
         return  fetch(`http://localhost:8000/api/v1/user/${id}`, {
                 method: 'GET',
                 headers: {
@@ -19,7 +20,7 @@ const userAuth = () => {
         })
     
     
-    return [user,userAuthLoaading];
+    return [user,userAuthLoaading, refetch];
 
 
     
