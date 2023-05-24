@@ -54,7 +54,7 @@ function Login () {
 
 
     return (
-        <div className="bg-gray-100 w-full h-screen flex justify-center items-center">
+        <div className="bg-gray-200 w-full h-screen flex justify-center items-center">
             <div className="drop-shadow-md">
                 <div className="card lg:card-side bg-base-100 p-4">
                     <img className='w-72' src={loginImage} alt="" />

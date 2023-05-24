@@ -8,6 +8,7 @@ import Navbar from '../shared/navbar';
 import UpperNavbar from '../shared/upperNavbar';
 import { Route, Router, Routes } from 'react-router-dom';
 import Login from '../account/login';
+import Signup from '../account/signup';
 
 function Home() {
     const [show, setShow] = useState(true);
@@ -22,6 +23,7 @@ function Home() {
                 <Route path='community' element={<Community show={show} setShow={setShow}></Community>}></Route>
                 <Route path='profile' element={<Profile show={show} setShow={setShow}></Profile>}></Route>
                 <Route path='login' element={<Login></Login>}></Route>
+                <Route path='signup' element={<Signup></Signup>}></Route>
             </Routes>
         </div>
     );
