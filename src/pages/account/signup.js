@@ -11,6 +11,39 @@ function Signup () {
     const navigate = useNavigate();
 
     const onSubmit = async data => {
+        data.activeStatus= 'active';
+        
+        fetch(`http://localhost:8000/api/v1/user/`,{
+            method: 'POST',
+            headers:{
+                'content-type':'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.status==='fail'){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ops',
+                    text: `${data.error}`,
+                    footer: ''
+                })
+
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Great',
+                    text: `Successfully created the Account!`,
+                    footer: ''
+                }).then(()=>{
+                    navigate('/');
+                })
+                localStorage.setItem('userId', data.data._id);
+                
+            }
+        })  
     }
 
     return (
@@ -23,8 +56,9 @@ function Signup () {
                             <div class="card flex-shrink-0 w-full md:w-screen lg:w-screen max-w-sm  bg-white drop-shadow-md">
                                 <div class="card-body">
                                     <h2 className='text-xl font-bold text-center'>Create your account</h2>
+                                    {/* Email */}
                                     <div class="form-control">
-                                        <label class="label">
+                                        <label class="label mb-[-5px]">
                                             <span class="label-text">Email</span>
                                         </label>
                                         <input type="text" class="input input-bordered bg-white"
@@ -44,8 +78,9 @@ function Signup () {
                                             {errors.email?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.email.message}</span>}
                                         </label>
                                     </div>
-                                    <div class="form-control">
-                                    <label class="label">
+                                    {/* Password */}
+                                    <div class="form-control mt-[-15px]">
+                                    <label class="label mb-[-5px]">
                                             <span class="label-text">Password</span>
                                             <span class="label-text-alt ">
                                                 {
@@ -82,124 +117,97 @@ function Signup () {
                                             {errors.password?.type === 'minLength' && <span class="label-text-alt text-red-600">{errors.password.message}</span>}
                                         </label>
                                     </div>
-                                    <div class="form-control">
-                                        <label class="label">
-                                            <span class="label-text">Email</span>
+                                    {/* First Name */}
+                                    <div class="form-control mt-[-15px]">
+                                        <label class="label mb-[-5px]">
+                                            <span class="label-text">First Name</span>
                                         </label>
                                         <input type="text" class="input input-bordered bg-white"
-                                        {...register('email', {
+                                        {...register('firstName', {
                                             required:{
                                                 value: true,
-                                                message: 'Email must be Required'
-                                            },
-                                            pattern: {
-                                                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                                                message: 'Email is Invaild'
+                                                message: 'First Name must be Required'
                                             }
                                         })} 
                                         />
                                         <label class="label">
-                                            {errors.email?.type === 'required' && <span class="label-text-alt text-red-600">{errors.email.message}</span>}
-                                            {errors.email?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.email.message}</span>}
+                                            {errors.firstName?.type === 'required' && <span class="label-text-alt text-red-600">{errors.firstName.message}</span>}
                                         </label>
                                     </div>
-                                    <div class="form-control">
-                                    <label class="label">
-                                            <span class="label-text">Password</span>
-                                            <span class="label-text-alt ">
-                                                {
-                                                    show?
-                                                    <div onClick={()=>{
-                                                        setShow(!show)
-                                                    }} className='flex items-center text-blue-700 font-semibold'>
-                                                        <p>Hide</p><BiShowAlt className='mt-1 ml-2'></BiShowAlt>
-                                                    </div>
-                                                    :
-                                                    <div onClick={() =>{
-                                                        setShow(!show)
-                                                    }} className='flex items-center text-blue-700 font-semibold'>
-                                                        <p>Show</p><BiHide className='mt-1 ml-2'></BiHide>
-                                                    </div>
-
-                                                }
-                                            </span>
+                                    {/* Last Name */}
+                                    <div  class="form-control mt-[-15px]">
+                                    <label class="label mb-[-5px]">
+                                            <span class="label-text">Last Name</span>
                                         </label>
-                                        <input type={ show ? 'text' : 'password'}  class="input input-bordered bg-white"
-                                        {...register('password', {
+                                        <input type="text" class="input input-bordered bg-white"
+                                        {...register('lastName', {
                                             required:{
                                                 value: true,
-                                                message: 'Password must be Required'
-                                            },
-                                            minLength: {
-                                                value: 6,
-                                                message: 'Password must be 6 Character or longer'
+                                                message: 'Last Name must be Required'
                                             }
                                         })}
                                         />
                                         <label class="label">
-                                            {errors.password?.type === 'required' && <span class="label-text-alt text-red-600">{errors.password.message}</span>}
-                                            {errors.password?.type === 'minLength' && <span class="label-text-alt text-red-600">{errors.password.message}</span>}
+                                            {errors.lastName?.type === 'required' && <span class="label-text-alt text-red-600">{errors.lastName.message}</span>}
                                         </label>
                                     </div>
-                                    <div class="form-control">
-                                        <label class="label">
-                                            <span class="label-text">Email</span>
+                                    {/* Contact Number */}
+                                    <div class="form-control mt-[-15px]">
+                                        <label class="label mb-[-5px]">
+                                            <span class="label-text">Contact Number</span>
                                         </label>
-                                        <input type="text" class="input input-bordered bg-white"
-                                        {...register('email', {
+                                        <input type="number"  class="input input-bordered bg-white"
+                                        {...register('contactNumber', {
                                             required:{
                                                 value: true,
-                                                message: 'Email must be Required'
-                                            },
-                                            pattern: {
-                                                value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                                                message: 'Email is Invaild'
+                                                message: 'Contact must be Required'
                                             }
                                         })} 
                                         />
                                         <label class="label">
-                                            {errors.email?.type === 'required' && <span class="label-text-alt text-red-600">{errors.email.message}</span>}
-                                            {errors.email?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.email.message}</span>}
+                                            {errors.contactNumber?.type === 'required' && <span class="label-text-alt text-red-600">{errors.contactNumber.message}</span>}
                                         </label>
-                                    </div>
-                                    <div class="form-control">
-                                    <label class="label">
-                                            <span class="label-text">Password</span>
-                                            <span class="label-text-alt ">
-                                                {
-                                                    show?
-                                                    <div onClick={()=>{
-                                                        setShow(!show)
-                                                    }} className='flex items-center text-blue-700 font-semibold'>
-                                                        <p>Hide</p><BiShowAlt className='mt-1 ml-2'></BiShowAlt>
-                                                    </div>
-                                                    :
-                                                    <div onClick={() =>{
-                                                        setShow(!show)
-                                                    }} className='flex items-center text-blue-700 font-semibold'>
-                                                        <p>Show</p><BiHide className='mt-1 ml-2'></BiHide>
-                                                    </div>
-
-                                                }
-                                            </span>
+                                     </div>
+                                     {/* University */}
+                                     <div class="form-control mt-[-15px]">
+                                        <label class="label mb-[-5px]">
+                                            <span class="label-text">University Name</span>
                                         </label>
-                                        <input type={ show ? 'text' : 'password'}  class="input input-bordered bg-white"
-                                        {...register('password', {
+                                        <input type="text" class="input input-bordered bg-white"
+                                        {...register('university', {
                                             required:{
                                                 value: true,
-                                                message: 'Password must be Required'
-                                            },
-                                            minLength: {
-                                                value: 6,
-                                                message: 'Password must be 6 Character or longer'
+                                                message: 'University must be Required'
                                             }
-                                        })}
+                                        })} 
                                         />
-                                        <label class="label">
-                                            {errors.password?.type === 'required' && <span class="label-text-alt text-red-600">{errors.password.message}</span>}
-                                            {errors.password?.type === 'minLength' && <span class="label-text-alt text-red-600">{errors.password.message}</span>}
+                                        <label class="label ">
+                                            {errors.university?.type === 'required' && <span class="label-text-alt text-red-600">{errors.university.message}</span>}
                                         </label>
-                                    </div>
+                                     </div>
+                                     {/* role */}
+                                     <div className="form-control w-full max-w-xs mt-[-15px]">
+                                        <label className="label mb-[-5px]">
+                                            <span className="label-text">Your Role</span>
+                                        </label>
+                                        <select 
+                                        {...register('role', {
+                                            required:{
+                                                value: true,
+                                                message: 'Role must be Required'
+                                            }
+                                        })} 
+                                        className="select select-bordered">
+                                            <option disabled selected value="">Not choosed yet</option>
+                                            <option value="professor">Professor</option>
+                                            <option value="student">Student</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                        <label class="label">
+                                            {errors.role?.type === 'required' && <span class="label-text-alt text-red-600">{errors.role.message}</span>}
+                                        </label>
+                                        </div>
+
                                     <div class="form-control mt-2">
                                         <button type='submit' class="btn btn-accent text-white">Sign up</button>
                                     </div>
