@@ -2,17 +2,20 @@ import { useState } from 'react';
 import signupImage from '../../assets/undraw/signup.svg'
 import {BiShowAlt, BiHide} from "react-icons/bi"
 import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import Select from 'react-select';
+import universityList from '../../data/universityListBD';
+import universityDepartment from '../../data/universityDepartment';
 
 function Signup () {
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, control, handleSubmit } = useForm();
     const [show, setShow] = useState(false);
     const navigate = useNavigate();
-
+    console.log(universityList);
     const onSubmit = async data => {
         data.activeStatus= 'active';
-        
+        console.log(data);
         fetch(`http://localhost:8000/api/v1/user/`,{
             method: 'POST',
             headers:{
@@ -171,18 +174,92 @@ function Signup () {
                                      {/* University */}
                                      <div class="form-control mt-[-15px]">
                                         <label class="label mb-[-5px]">
-                                            <span class="label-text">University Name</span>
+                                            <span class="label-text">University</span>
                                         </label>
-                                        <input type="text" class="input input-bordered bg-white"
+                                        {/* <input type="text" class="input input-bordered bg-white"
                                         {...register('university', {
                                             required:{
                                                 value: true,
                                                 message: 'University must be Required'
                                             }
                                         })} 
+                                        /> */}
+                                        {/* <Controller 
+                                            control={control}
+                                            as = {<Select />}
+                                            name="university"
+                                            defaultValue={props.universityList[0]}
+                                            options={props.universityList}
+                                            {...register('university', {
+                                                required:{
+                                                    value: true,
+                                                    message: 'University must be Required'
+                                                }
+                                            })}
+                                            className="basic-single"
+                                            classNamePrefix="select"
+                                        /> */}
+                                        <Controller
+                                            name="university"
+                                            control={control}
+                                            render={({ 
+                                                field: {onChange, value, ref}
+                                             }) => (
+                                            <Select
+                                                options={universityList}
+                                                value={universityList.find(c => c.value === value)}
+                                                onChange={val => onChange(val.value)}
+                                                inputRef={ref}
+                                            />
+                                            )}
+                                            rules={{ required:{
+                                                value: true,
+                                                message: 'University must be Required'
+                                            } }}
                                         />
+                                        {/* <Select
+                                            className="basic-single"
+                                            classNamePrefix="select"
+                                            // defaultValue={universityList[0]}
+                                            name="university"
+                                            options={universityList}
+                                            {...register('university', {
+                                                required:{
+                                                    value: true,
+                                                    message: 'University must be Required'
+                                                }
+                                            })}
+                                        /> */}
                                         <label class="label ">
                                             {errors.university?.type === 'required' && <span class="label-text-alt text-red-600">{errors.university.message}</span>}
+                                        </label>
+                                     </div>
+                                      {/* Department */}
+                                      <div class="form-control mt-[-15px]">
+                                        <label class="label mb-[-5px]">
+                                            <span class="label-text">Department</span>
+                                        </label>
+                                        <Controller
+                                            name="department"
+                                            control={control}
+                                            render={({ 
+                                                field: {onChange, value, ref}
+                                             }) => (
+                                            <Select
+                                                options={universityDepartment}
+                                                value={universityDepartment.find(c => c.value === value)}
+                                                onChange={val => onChange(val.value)}
+                                                inputRef={ref}
+                                            />
+                                            )}
+                                            rules={{ required:{
+                                                value: true,
+                                                message: 'Department must be Required'
+                                            } }}
+                                        />
+                                       
+                                        <label class="label ">
+                                            {errors.university?.type === 'required' && <span class="label-text-alt text-red-600">{errors.department.message}</span>}
                                         </label>
                                      </div>
                                      {/* role */}
@@ -199,9 +276,8 @@ function Signup () {
                                         })} 
                                         className="select select-bordered">
                                             <option disabled selected value="">Not choosed yet</option>
-                                            <option value="professor">Professor</option>
-                                            <option value="student">Student</option>
-                                            <option value="other">Other</option>
+                                            <option value="Professor">Professor</option>
+                                            <option value="Student">Student</option>
                                         </select>
                                         <label class="label">
                                             {errors.role?.type === 'required' && <span class="label-text-alt text-red-600">{errors.role.message}</span>}
