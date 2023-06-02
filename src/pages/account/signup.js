@@ -285,7 +285,7 @@ function Signup () {
                                         </div>
 
                                     <div class="form-control mt-2">
-                                        <button type='submit' class="btn btn-accent text-white">Sign up</button>
+                                        <button type='submit' class="btn btn-success text-white">Sign up</button>
                                     </div>
                                     <p className='label-text-alt ml-1 text-center'>Already have an account? <Link to='/login' className='text-blue-800 underline'>Log in</Link></p>
                                     

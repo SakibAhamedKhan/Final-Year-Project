@@ -123,7 +123,7 @@ function Login () {
                                         </label>
                                     </div>
                                     <div class="form-control mt-2">
-                                        <button type='submit' class="btn btn-accent text-white">Login</button>
+                                        <button type='submit' class="btn btn-success text-white">Login</button>
                                     </div>
                                     <p className='label-text-alt ml-1 text-center'>Don't have an account? <Link to='/signup' className='text-blue-800 underline'>Sign up</Link></p>
                                     

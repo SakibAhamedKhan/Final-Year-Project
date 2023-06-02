@@ -1,4 +1,5 @@
 import publishImage from '../../assets/undraw/publish.svg'
+import selectionImage from '../../assets/undraw/selection.svg'
 import {MdOutlinePublish} from 'react-icons/md';
 import Navbar from '../shared/navbar';
 import UpperNavbar from '../shared/upperNavbar';
@@ -15,7 +16,7 @@ import journalList from '../../data/journalList';
 function PaperPublish(props) {
     const { register, formState: { errors }, control, handleSubmit } = useForm();
     const [publishData, setPublishData] = useState({});
-    const [part, setPart] = useState(2);
+    const [part, setPart] = useState(1);
     const {show, setShow} = props;
     const [user, userAuthLoaading] = userAuth();
     const navigate = useNavigate();
@@ -45,6 +46,18 @@ function PaperPublish(props) {
     }
     console.log(publishData);
 
+
+    // Submit Now Button Onclick
+    const submitNow = () => {
+        console.log(publishData);
+    }
+
+    // Save Draft Button Onclick
+    const saveDraft = () => {
+
+    }
+
+
     return (
         <div className='flex flex-row'>
             <div className={`${show? '': 'bg-white w-[50px]'} border-r-2 h-screen border-gray-2001`} >
@@ -68,7 +81,14 @@ function PaperPublish(props) {
                         {/* card design*/}
                         <div className="pt-6 pb-6">
                             <div className="card lg:card-side bg-base-100 px-8 py-2  drop-shadow-md">
-                                <img className='w-72' src={publishImage} alt="" />
+                                {
+                                    (part===1 || part==2) && 
+                                    <img className='w-72 px-6' src={publishImage} alt="" />
+                                }
+                                {
+                                    (part==3) && 
+                                    <img className='w-72 px-6' src={selectionImage} alt="" />
+                                }
 
                                 <div className='card-body  pl-4'>
                                     {/* First part Form for publish type, Choose file, title, authors, data, doi */}
@@ -106,7 +126,7 @@ function PaperPublish(props) {
                                                 </div>
 
                                                 {/* File Choose */}
-                                                <div class="form-control">
+                                                <div class="form-control mt-[-15px]">
                                                     <label class="label mb-[-5px]">
                                                         <span class="label-text">Choose File</span>
                                                     </label>
@@ -143,7 +163,7 @@ function PaperPublish(props) {
                                                 </div>    
                                                 
                                                 {/* Date */}
-                                                <div class="form-control">
+                                                <div class="form-control mt-[-15px]">
                                                     <label class="label mb-[-5px]">
                                                         <span class="label-text">Date</span>
                                                     </label>
@@ -162,7 +182,7 @@ function PaperPublish(props) {
                                                 </div>
 
                                                 {/* DOI */}
-                                                <div class="form-control">
+                                                <div class="form-control mt-[-15px]">
                                                     <label class="label mb-[-5px]">
                                                         <span class="label-text">DOI</span>
                                                     </label>
@@ -241,62 +261,82 @@ function PaperPublish(props) {
                                                 </label>
                                             </div>
 
-                                            {/* File Choose */}
-                                            <div class="form-control">
+                                            {/* Volumn */}
+                                            <div class="form-control mt-[-15px]">
                                                 <label class="label mb-[-5px]">
-                                                    <span class="label-text">Choose File</span>
+                                                    <span class="label-text">Volumn</span>
                                                 </label>
-                                                <input type="file"  class="file-input file-input-bordered file-input-accent bg-white text-sm"
-                                                {...register('file', {
+                                                <input type="number"  class="input input-bordered bg-white text-sm"
+                                                {...register('volumn', {
                                                     required:{
                                                         value: true,
-                                                        message: 'Choose file must be Required'
+                                                        message: 'Volumn must be Required'
                                                     },
                                                 })} 
                                                 />
                                                 <label class="label">
-                                                    {errors.file?.type === 'required' && <span class="label-text-alt text-red-600">{errors.file.message}</span>}
-                                                    {errors.file?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.file.message}</span>}
+                                                    {errors.volumn?.type === 'required' && <span class="label-text-alt text-red-600">{errors.volumn.message}</span>}
+                                                    {errors.volumn?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.volumn.message}</span>}
                                                 </label>
                                             </div>
 
+                                            {/* Issue */}
+                                            <div class="form-control mt-[-15px]">
+                                                <label class="label mb-[-5px]">
+                                                    <span class="label-text">Issue</span>
+                                                </label>
+                                                <input type="number"  class="input input-bordered bg-white text-sm"
+                                                {...register('issue', {
+                                                    required:{
+                                                        value: true,
+                                                        message: 'Issue must be Required'
+                                                    },
+                                                })} 
+                                                />
+                                                <label class="label">
+                                                    {errors.issue?.type === 'required' && <span class="label-text-alt text-red-600">{errors.issue.message}</span>}
+                                                    {errors.issue?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.issue.message}</span>}
+                                                </label>
+                                            </div>
                                             
-                                            {/* Date */}
-                                            <div class="form-control">
-                                                <label class="label mb-[-5px]">
-                                                    <span class="label-text">Date</span>
-                                                </label>
-                                                <input type="date" class="input input-bordered bg-white text-sm"
-                                                {...register('date', {
-                                                    required:{
-                                                        value: true,
-                                                        message: 'Date must be Required'
-                                                    },
-                                                })} 
-                                                />
-                                                <label class="label">
-                                                    {errors.date?.type === 'required' && <span class="label-text-alt text-red-600">{errors.date.message}</span>}
-                                                    {errors.date?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.date.message}</span>}
-                                                </label>
-                                            </div>
+                                            <div className='flex w-[384px] mt-[-15px]'>
+                                                {/* Page Start */}
+                                                <div class="form-control w-[184px] mr-[16px]">
+                                                    <label class="label mb-[-5px]">
+                                                        <span class="label-text">Page Start</span>
+                                                    </label>
+                                                    <input type="number"  class="input input-bordered bg-white text-sm"
+                                                    {...register('pageStart', {
+                                                        required:{
+                                                            value: true,
+                                                            message: 'Page Start must be Required'
+                                                        },
+                                                    })} 
+                                                    />
+                                                    <label class="label">
+                                                        {errors.pageStart?.type === 'required' && <span class="label-text-alt text-red-600">{errors.pageStart.message}</span>}
+                                                        {errors.pageStart?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.pageStart.message}</span>}
+                                                    </label>
+                                                </div>
 
-                                            {/* DOI */}
-                                            <div class="form-control">
-                                                <label class="label mb-[-5px]">
-                                                    <span class="label-text">DOI</span>
-                                                </label>
-                                                <input type="text" class="input input-bordered bg-white text-sm"
-                                                {...register('doi', {
-                                                    required:{
-                                                        value: true,
-                                                        message: 'DOI must be Required'
-                                                    },
-                                                })} 
-                                                />
-                                                <label class="label">
-                                                    {errors.doi?.type === 'required' && <span class="label-text-alt text-red-600">{errors.doi.message}</span>}
-                                                    {errors.doi?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.doi.message}</span>}
-                                                </label>
+                                                 {/* Page End */}
+                                                 <div class="form-control w-[184px]">
+                                                    <label class="label mb-[-5px]">
+                                                        <span class="label-text">Page End</span>
+                                                    </label>
+                                                    <input type="number"  class="input input-bordered bg-white text-sm"
+                                                    {...register('pageEnd', {
+                                                        required:{
+                                                            value: true,
+                                                            message: 'Page End must be Required'
+                                                        },
+                                                    })} 
+                                                    />
+                                                    <label class="label">
+                                                        {errors.pageEnd?.type === 'required' && <span class="label-text-alt text-red-600">{errors.pageEnd.message}</span>}
+                                                        {errors.pageEnd?.type === 'pattern' && <span class="label-text-alt text-red-600">{errors.pageEnd.message}</span>}
+                                                    </label>
+                                                </div>
                                             </div>
 
                                             <div class="form-control mt-2">
@@ -311,8 +351,11 @@ function PaperPublish(props) {
 
                                     {
                                         part===3 && <div>
-                                            <h2>Part 3</h2>
-                                            <button>Submit</button>
+                                            <h2 className='font-bold text-2xl mb-2 text-center'>Choose the submit</h2>
+                                            <div className='flex flex-col'>
+                                                <button onClick={submitNow} class="btn-success text-white my-2 px-5 py-2 rounded-[5px]">Submit Now</button>
+                                                <button onClick={saveDraft} class="btn-primary text-white my-2 px-5 py-2 rounded-[5px]">Save to draft and Submit later</button>
+                                            </div>
                                         </div>
                                     }
                                 </div>
