@@ -12,6 +12,7 @@ import { Controller, useForm } from 'react-hook-form';
 import Select from 'react-select';
 import researchPaperType from '../../data/researchPaperType'
 import journalList from '../../data/journalList';
+import Swal from 'sweetalert2';
 
 function PaperPublish(props) {
     const { register, formState: { errors }, control, handleSubmit } = useForm();
@@ -54,7 +55,41 @@ function PaperPublish(props) {
 
     // Save Draft Button Onclick
     const saveDraft = () => {
+        publishData.file = "files";
+        let userId = localStorage.getItem('userId');
+        publishData.userId = userId;
+        
+        fetch(`http://localhost:8000/api/v1/publish-paper-draft/submit`,{
+            method: 'POST',
+            headers:{
+                'content-type':'application/json'
+            },
+            body: JSON.stringify(publishData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.status==='fail'){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ops',
+                    text: `${data.error}`,
+                    footer: ''
+                })
 
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Great',
+                    text: `Successfully publish paper added to the draft!`,
+                    footer: ''
+                }).then(()=>{
+                    navigate('/');
+                })
+                // localStorage.setItem('userId', data.data._id);
+                
+            }
+        })  
     }
 
 

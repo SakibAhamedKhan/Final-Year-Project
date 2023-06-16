@@ -33,6 +33,12 @@ function Navbar(props) {
                         <p className={`${show ? '':'hidden'}`}>Publish Paper</p>
                     </div>      
                 </NavLink></li>
+                <li><NavLink to='/paperpublishdraft' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>
+                    <div className="flex flex-row jusity-start items-center">
+                        <div className={` ${show? 'pr-2':''}  text-lg`}><MdPublishedWithChanges/></div>
+                        <p className={`${show ? '':'hidden'}`}>Paper Draft</p>
+                    </div>      
+                </NavLink></li>
                 <li><NavLink to='/community' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>
                     <div className="flex flex-row jusity-start items-center">
                         <div className={` ${show? 'pr-2':''}  text-lg`}><FiHelpCircle/></div>

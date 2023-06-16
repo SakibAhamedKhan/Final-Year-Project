@@ -9,6 +9,8 @@ import UpperNavbar from '../shared/upperNavbar';
 import { Route, Router, Routes } from 'react-router-dom';
 import Login from '../account/login';
 import Signup from '../account/signup';
+import PaperPublishDraft from '../paperPublishDraft/paperPublishDraft';
+import PaperPublishDraftView from '../paperPublishDraft/paperPublishDraftView';
 
 function Home() {
     const [show, setShow] = useState(true);
@@ -18,12 +20,22 @@ function Home() {
         <div>
             <Routes>
                 <Route path='/newsFeed' element={<Newsfeed show={show} setShow={setShow}></Newsfeed>}></Route>
+
                 <Route path='/' element={<PaperSearch show={show} setShow={setShow}></PaperSearch>}></Route>
-                <Route path='paperpublish' element={<PaperPublish show={show} setShow={setShow}></PaperPublish>}></Route>
-                <Route path='community' element={<Community show={show} setShow={setShow}></Community>}></Route>
-                <Route path='profile' element={<Profile show={show} setShow={setShow}></Profile>}></Route>
-                <Route path='login' element={<Login></Login>}></Route>
-                <Route path='signup' element={<Signup></Signup>}></Route>
+
+                <Route path='/paperpublish' element={<PaperPublish show={show} setShow={setShow}></PaperPublish>}></Route>
+
+                <Route path='/paperpublishdraft' element={<PaperPublishDraft show={show} setShow={setShow}></PaperPublishDraft>}></Route>
+
+                <Route path='/paperpublishdraft/:draft_id' element={<PaperPublishDraftView show={show} setShow={setShow}></PaperPublishDraftView>}></Route>
+
+                <Route path='/community' element={<Community show={show} setShow={setShow}></Community>}></Route>
+
+                <Route path='/profile' element={<Profile show={show} setShow={setShow}></Profile>}></Route>
+
+                <Route path='/login' element={<Login></Login>}></Route>
+
+                <Route path='/signup' element={<Signup></Signup>}></Route>
             </Routes>
         </div>
     );
