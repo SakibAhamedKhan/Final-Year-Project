@@ -14,29 +14,44 @@ import researchPaperType from '../../data/researchPaperType'
 import journalList from '../../data/journalList';
 import Swal from 'sweetalert2';
 import PaperPublishDraftCard from './paperPublishDraftCard';
+import { useQuery } from 'react-query';
 
 function PaperPublishDraft(props) {
     const {show, setShow} = props;
     const [user, userAuthLoaading] = userAuth();
     const [modalIndex, setModalIndex] = useState();
     const [modalData, setModalData] = useState({});
-    const [draftData, setDraftData] = useState([]);
+    // const [draftData, setDraftData] = useState([]);
     const navigate = useNavigate();
 
-    useEffect(() => {
+
+    const {data:draftData, isLoading, refetch} = useQuery('draftData', () => {
         let id = localStorage.getItem('userId');
-        fetch(`http://localhost:8000/api/v1/publish-paper-draft/${id}`,{
+        return  fetch(`http://localhost:8000/api/v1/publish-paper-draft/${id}`,{
             method: 'GET',
             headers:{
                 'content-type':'application/json'
             },
         })
         .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            setDraftData(data.data);
-        })  
-    },[])
+        })
+    
+    if(isLoading){
+        return  (<div className='flex flex-row'>
+        <div className={`${show? '': 'bg-white w-[50px]'} border-r-2 h-screen border-gray-2001`} >
+            <Navbar show={show}/>
+        </div>
+
+        <div className="w-full bg-gray-100 relative">
+            <div className='h-[40px] bg-white w-full drop-shadow-md absolute z-10'>
+                <UpperNavbar show={show} setShow={setShow}/>
+            </div>
+            <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
+                Loading...
+            </div>
+        </div>
+    </div>)
+    }
 
     if(userAuthLoaading==false){
         if(user?.status=='fail'){
@@ -75,8 +90,8 @@ function PaperPublishDraft(props) {
                 <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
                     {/* <h2 className="text-center font-bold text-xl">Publish Your Paper</h2> */}
                     {
-                        draftData?
-                        draftData.map((d, index) => <PaperPublishDraftCard data={d} index={index} ModalShow={ModalShow} />)
+                        draftData.data?
+                        draftData.data.map((d, index) => <PaperPublishDraftCard data={d} index={index} ModalShow={ModalShow} refetch={refetch} />)
                         :
                         <button className="btn">
                             <span className="loading loading-spinner"></span>

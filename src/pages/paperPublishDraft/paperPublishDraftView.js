@@ -67,14 +67,53 @@ function PaperPublishDraftView(props) {
 
 
    const onSubmit = async data => {
-        console.log(data);
-        setPublishData({...publishData, ...data});
-        if(part===1){
-            setPart(2);
+        const update = {
+            id: draftViewData._id,
+            updatedData:{
+                abstract:abstract,
+                date:date,
+                doi:doi,
+                file:"files",
+                issue:issue,
+                journalList:journal,
+                pageEnd:pageEnd,
+                pageStart:pageStart,
+                researchPaperType:researchType,
+                title:title,
+                volumn:volumn
+            }
         }
-        if(part==2){
-            setPart(3);
-        }
+        fetch(`http://localhost:8000/api/v1/publish-paper-draft/submit-updated`,{
+            method: 'PATCH',
+            headers:{
+                'content-type':'application/json'
+            },
+            body: JSON.stringify(update)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.status==='fail'){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ops',
+                    text: `${data.error}`,
+                    footer: ''
+                })
+
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Great',
+                    text: `Successfully updated draft paper!`,
+                    footer: ''
+                }).then(()=>{
+                    navigate('/paperpublishdraft');
+                })
+                // localStorage.setItem('userId', data.data._id);
+                
+            }
+        })  
     }
 
     const handleTitle = (event) => {
@@ -245,14 +284,10 @@ function PaperPublishDraftView(props) {
                                 </div>
 
                                 <div class="form-control mt-2">
-                                    <button type='submit' class="btn  text-white">Next</button>
+                                    <button type='submit' class="btn btn-accent">Update</button>
                                 </div>
                             </form>        
 
-
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-primary">Listen</button>
-                            </div>
                         </div>
                     </div>
                     :
