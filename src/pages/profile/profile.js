@@ -40,25 +40,76 @@ function Profile(props) {
                 <div className='h-[40px] bg-white w-full drop-shadow-md absolute z-10'>
                     <UpperNavbar show={show} setShow={setShow}/>
                 </div>
-                <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
-                    <div className="card bg-base-100 drop-shadow-md rounded-[5px] p-8">
-                        <h2 className="mb-4 font-semibold text-xl">Welcome, {user.data.firstName} {user.data.lastName}</h2>
-                        <div className="mb-4">
-                            <div class="avatar online">
-                                <div class="w-24 rounded-full">
-                                    <img src={image1} />
+                <div className="pl-4 pr-2 pt-16 pb-2 flex overflow-y-scroll h-screen  w-full">
+                    {/* Published paper section */}
+                    <div className="flex-1 mr-6">
+                        <div className="card bg-base-100 drop-shadow-md rounded-[5px] p-8">
+                                <h2 className="mb-4 font-semibold text-xl">Welcome, {user.data.firstName} {user.data.lastName}</h2>
+                                <div className="mb-4">
+                                    <div class="avatar online">
+                                        <div class="w-24 rounded-full">
+                                            <img src={image1} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="font-bold flex mb-2">Name: <p className="pl-2 font-medium">{user.data.firstName} {user.data.lastName}</p></div>
+                                <div className="font-bold flex mb-2">Last Institute: <p className="pl-2 font-medium">{user.data.university}</p></div>
+                                <div className="font-bold flex mb-2">Department: <p className="pl-2 font-medium">{user.data.department}</p></div>
+                                <div className="font-bold flex mb-2">Role: <p className="pl-2 font-medium">{user.data.role}</p></div>
+                                <div className="font-bold flex mb-2">Email: <p className="pl-2 font-medium">{user.data.email}</p></div>
+                                <div className="font-bold flex mb-2">Contact Number: <p className="pl-2 font-medium">{user.data.contactNumber}</p></div>
+                        </div>
+                    </div>
+
+                    
+                    <div className="w-[300px] ">
+                        {/* Profile Details Section */}
+                        <div className="card bg-base-100 drop-shadow-md rounded-[5px] p-8">
+                            <div className="flex justify-center items-center">
+                                <div>
+                                    <h2 className="font-semibold text-lg">Welcome,</h2>
+                                    <p className="text-md">{user.data.firstName} {user.data.lastName}</p>
+                                </div>
+                                <div className="mb-4 flex justify-center items-center">
+                                    <div class="avatar online">
+                                        <div class="w-24 rounded-full">
+                                            <img src={image1} />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="font-bold flex mb-2">Name: <p className="pl-2 font-medium">{user.data.firstName} {user.data.lastName}</p></div>
-                        <div className="font-bold flex mb-2">Last Institute: <p className="pl-2 font-medium">{user.data.university}</p></div>
-                        <div className="font-bold flex mb-2">Department: <p className="pl-2 font-medium">{user.data.department}</p></div>
-                        <div className="font-bold flex mb-2">Role: <p className="pl-2 font-medium">{user.data.role}</p></div>
-                        <div className="font-bold flex mb-2">Email: <p className="pl-2 font-medium">{user.data.email}</p></div>
-                        <div className="font-bold flex mb-2">Contact Number: <p className="pl-2 font-medium">{user.data.contactNumber}</p></div>
+                           
+                            <div className="font-bold flex text-sm">Name: </div>
+                            <p className="font-medium text-sm mb-2">{user.data.firstName} {user.data.lastName}</p>
 
+                            <div className="font-bold flex text-sm">Last Institute: </div>
+                            <p className="font-medium text-sm mb-2" >{user.data.university}</p>
+
+                            <div className="font-bold flex text-sm">Department: </div>
+                            <p className="font-medium text-sm mb-2">{user.data.department}</p>
+
+                            <div className="font-bold flex text-sm">Role: </div>
+                            <p className="font-medium text-sm mb-2">{user.data.role}</p>
+
+
+                            <div className="font-bold flex text-sm">Email: </div>
+                            <p className="font-medium text-sm mb-2">{user.data.email}</p>
+
+
+                            <div className="font-bold flex text-sm">Contact Number: </div>
+                            <p className="font-medium text-sm mb-2">{user.data.contactNumber}</p>
+
+
+                        </div>
+                        
+                        {/* Profile Follower Suggection*/}
                     </div>
+
+                   
+                    
                 </div>
+
+                
             </div>
         </div>
         

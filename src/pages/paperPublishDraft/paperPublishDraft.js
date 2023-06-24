@@ -74,7 +74,7 @@ function PaperPublishDraft(props) {
 
    
     
-    console.log(draftData);
+    console.log(draftData.data.length);
 
 
     return (
@@ -90,15 +90,14 @@ function PaperPublishDraft(props) {
                 <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
                     {/* <h2 className="text-center font-bold text-xl">Publish Your Paper</h2> */}
                     {
-                        draftData.data?
-                        draftData.data.map((d, index) => <PaperPublishDraftCard data={d} index={index} ModalShow={ModalShow} refetch={refetch} />)
-                        :
-                        <button className="btn">
-                            <span className="loading loading-spinner"></span>
-                            loading
-                        </button>
-                    }
+                        (draftData.data.length!==0) ?
 
+                        draftData.data.map((d, index) => <PaperPublishDraftCard data={d} index={index} ModalShow={ModalShow} refetch={refetch} />)
+                        
+                        :
+                        
+                        <div className='text-2xl mt-6 text-center text-blue-500'>No publish paper added in draft! </div>
+                    }
                         {/* Modal */}
                         {/* Put this part before </body> tag */}
                         <input type="checkbox" id={modalIndex} className="modal-toggle" />

@@ -122,10 +122,11 @@ function PaperPublish(props) {
                                 }
                                 {
                                     (part==3) && 
-                                    <img className='w-72 px-6' src={selectionImage} alt="" />
+                                    <img className='w-80 px-6 py-20' src={selectionImage} alt="" />
                                 }
 
                                 <div className='card-body  pl-4'>
+
                                     {/* First part Form for publish type, Choose file, title, authors, data, doi */}
                                     {
                                         part===1 && <div className='w-full md:w-screen lg:w-screen max-w-sm  bg-white'>
@@ -385,7 +386,7 @@ function PaperPublish(props) {
                                     {/* Third part for choose view or direct publish*/}
 
                                     {
-                                        part===3 && <div>
+                                        part===3 && <div className='mt-12'>
                                             <h2 className='font-bold text-2xl mb-2 text-center'>Choose the submit</h2>
                                             <div className='flex flex-col'>
                                                 <button onClick={submitNow} class="btn-success text-white my-2 px-5 py-2 rounded-[5px]">Submit Now</button>
