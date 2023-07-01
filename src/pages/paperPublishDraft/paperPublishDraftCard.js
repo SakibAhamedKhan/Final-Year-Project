@@ -10,7 +10,7 @@ const PaperPublishDraftCard  = (props) => {
     const handlePublishConformation = () => {
         Swal.fire({
             icon: 'question',
-            title: `Do you want to delete this ${data.researchPaperType} thats title is: ${data.title}`,
+            title: `Are you sure to publish this ${data.researchPaperType} thats title is: ${data.title}`,
             showDenyButton: true,
             confirmButtonText: 'Publish',
           }).then((result) => {
@@ -38,7 +38,7 @@ const PaperPublishDraftCard  = (props) => {
             title: data.title,
             volumn: data.volumn,
         }
-        fetch(`http://localhost:8000/api/v1/publish-paper/submit`,{
+        fetch(`http://localhost:8000/api/v1/published-paper/submit`,{
             method: 'POST',
             headers:{
                 'content-type':'application/json'
@@ -73,7 +73,7 @@ const PaperPublishDraftCard  = (props) => {
     const handleDeleteConformation = () => {
         Swal.fire({
             icon: 'info',
-            title: `Are you sure to publish this ${data.researchPaperType} thats title is: ${data.title}`,
+            title: `Do you want to delete this ${data.researchPaperType} thats title is: ${data.title}`,
             showDenyButton: true,
             confirmButtonText: 'Delete',
           }).then((result) => {
