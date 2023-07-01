@@ -34,11 +34,13 @@ const PublishedPaperView = (props) => {
                             </div>    
                         </button>
                         <div className="card-body">
+                           
+
                             <p className="text-3xl font-semibold">{paperData.researchPaperType}</p>
                             
                             <p className="text-xl text-blue-600 mb-2"><p className="font-semibold inline">Journal:</p> {paperData.journalList}</p>
 
-                            <ConvertTime date={paperData.date} ></ConvertTime>
+                          
 
                             <p className="text-xl mb-2"><p className="font-semibold inline">Title:</p> {paperData.title}</p>
 
@@ -54,6 +56,11 @@ const PublishedPaperView = (props) => {
 
                             <p className="text-xl  mb-2"><p className="font-semibold inline">DOI:</p> <a className="text-blue-900 underline inline 	cursor-pointer" href={`${paperData.doi}`} target="blank" >{paperData.doi}</a></p>
 
+
+                            <div className="font-semibold"><p className="text-sm inline"> Published in journal: </p><ConvertTime className="inline" date={paperData.date} ></ConvertTime></div>
+                            <div className="font-semibold"><p className="text-sm inline"> Published here: </p><ConvertTime className="inline" date={paperData.createdAt} ></ConvertTime></div>
+
+                            
                             <button className='btn btn-accent w-[250px] mt-2'>
                                 <div className="flex justify-center items-center">
                                 <FiBookOpen className='text-xl mr-2'/> 

@@ -43,7 +43,7 @@ function Profile(props) {
                 </div>
                 <div className="pl-4 pr-2 pt-16 pb-2 flex overflow-y-scroll h-screen  w-full">
                     {/* Published paper section */}
-                    <div className="flex-1 mr-6">
+                    <div className="flex-1 mr-6 overflow-y-scroll scrollbar-hide">
                         <div className="card bg-base-100 drop-shadow-md rounded-[5px] p-8">
                                 <MyPublishedPaper/>
                         </div>
