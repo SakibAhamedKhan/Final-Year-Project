@@ -46,8 +46,8 @@ const MyPublishedPaperCard  = (props) => {
             <div className="card w-full bg-gray-100 text-black my-6 drop-shadow-lg">
                 <div className="flex justify-between items-center p-4">
                     <div className="">
-                        <h2 className="card-title">{data.researchPaperType}</h2>
-                        <h4>Title: {data.title}</h4>
+                        <h4 className="font-semibold text-xl">{data.title}</h4>
+                        <h2 className="bg-green-200  w-fit rounded-md px-2 py-[1px] my-1 text-gray-500">{data.researchPaperType}</h2>
                         <p>Journal: {data.journalList}</p>
                         <div className="flex items-center my-1"><p className="text-sm mr-2 mt-[-2px]">Published here: </p><ConvertTime date={data.createdAt} ></ConvertTime></div>
                     </div>

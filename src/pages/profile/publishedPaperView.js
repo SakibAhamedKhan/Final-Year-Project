@@ -36,25 +36,23 @@ const PublishedPaperView = (props) => {
                         <div className="card-body">
                            
 
-                            <p className="text-3xl font-semibold">{paperData.researchPaperType}</p>
+                            <p className="text-3xl font-semibold mb-2"><p className="font-semibold inline"></p> {paperData.title}</p>
                             
-                            <p className="text-xl text-blue-600 mb-2"><p className="font-semibold inline">Journal:</p> {paperData.journalList}</p>
-
-                          
-
-                            <p className="text-xl mb-2"><p className="font-semibold inline">Title:</p> {paperData.title}</p>
-
-                            <p className="text-xl mb-2"><p className="font-semibold inline">Abstract:</p> {paperData.abstract}</p>
-
-                            <p className="text-xl mb-2"><p className="font-semibold inline">Issue:</p> {paperData.issue}</p>
-
-                            <p className="text-xl mb-2"><p className="font-semibold inline">Volumn:</p> {paperData.volumn}</p>
+                            <h2 className="bg-green-200  w-fit rounded-md px-2 py-[1px] my-1 text-gray-500">{paperData.researchPaperType}</h2>
                             
-                            <p className="text-xl mb-2"><p className="font-semibold inline">Page Start:</p> {paperData.pageStart}</p>
+                            <p className="text-md text-blue-600 mb-2"><p className="font-semibold inline">Journal:</p> {paperData.journalList}</p>
 
-                            <p className="text-xl mb-2"><p className="font-semibold inline">Page End:</p> {paperData.pageEnd}</p>
+                            <p className="text-md mb-2"><p className="font-semibold inline">Abstract:</p> {paperData.abstract}</p>
 
-                            <p className="text-xl  mb-2"><p className="font-semibold inline">DOI:</p> <a className="text-blue-900 underline inline 	cursor-pointer" href={`${paperData.doi}`} target="blank" >{paperData.doi}</a></p>
+                            <p className="text-md mb-2"><p className="font-semibold inline">Issue:</p> {paperData.issue}</p>
+
+                            <p className="text-md mb-2"><p className="font-semibold inline">Volumn:</p> {paperData.volumn}</p>
+                            
+                            <p className="text-md mb-2"><p className="font-semibold inline">Page Start:</p> {paperData.pageStart}</p>
+
+                            <p className="text-md mb-2"><p className="font-semibold inline">Page End:</p> {paperData.pageEnd}</p>
+
+                            <p className="text-md  mb-2"><p className="font-semibold inline">DOI:</p> <a className="text-blue-900 underline inline 	cursor-pointer" href={`${paperData.doi}`} target="blank" >{paperData.doi}</a></p>
 
 
                             <div className="font-semibold"><p className="text-sm inline"> Published in journal: </p><ConvertTime className="inline" date={paperData.date} ></ConvertTime></div>
