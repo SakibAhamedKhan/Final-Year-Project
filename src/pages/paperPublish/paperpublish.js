@@ -440,7 +440,12 @@ function PaperPublish(props) {
                                                         onChange={onChange}
                                                         inputRef={ref}
                                                     />
+                                                    
                                                     )}
+                                                    rules={{ required:{
+                                                        value: true,
+                                                        message: 'Authors must be Required'
+                                                    } }}
                                                     
                                                 />
                                                 <label class="label ">
@@ -467,6 +472,10 @@ function PaperPublish(props) {
                                                         inputRef={ref}
                                                     />
                                                     )}
+                                                    rules={{ required:{
+                                                        value: true,
+                                                        message: 'Co - Authors must be Required'
+                                                    } }}
                                                    
                                                 />
                                                 <label class="label ">

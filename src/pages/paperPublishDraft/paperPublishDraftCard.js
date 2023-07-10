@@ -37,6 +37,8 @@ const PaperPublishDraftCard  = (props) => {
             researchPaperType: data.researchPaperType,
             title: data.title,
             volumn: data.volumn,
+            authors: data.authors,
+            coAuthors: data.coAuthors,
         }
         fetch(`http://localhost:8000/api/v1/published-paper/submit`,{
             method: 'POST',
@@ -127,7 +129,7 @@ const PaperPublishDraftCard  = (props) => {
                         <p>Journal: {data.journalList}</p>
                     </div>
                     <div className="card-actions">
-                        <button className="btn btn-sm btn-warning" onClick={() => navigate(`/paperpublishdraft/${data._id}`)}><BiShow className="text-xl mr-1"/> View</button>
+                        <button className="btn btn-sm btn-warning" onClick={() => navigate(`/paperpublishdraft/${data._id}`)}><BiShow className="text-xl mr-1"/> View & Edit</button>
                         <button onClick={handlePublishConformation} className="btn btn-sm btn-accent">Publish</button>
                         <button onClick={handleDeleteConformation} className="btn btn-sm btn-error">Delete</button>
                     </div>
