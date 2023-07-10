@@ -1,7 +1,7 @@
 import images from "../assets/img/Sakib.jpeg"
 const journalList = [
 
-{label: "Artificial Intelligence", value: "Artificial Intelligence"},
+{label: "Artificial Intelligence", value: "01883343048"},
 {label: "IEEE Transactions on Evolutionary", value:"IEEE Transactions on Evolutionary"},
 {label: "Journal of Artificial Intelligence Research", value:"Journal of Artificial Intelligence Research"},
 {label: "Communications of the ACM", value:"Communications of the ACM"},

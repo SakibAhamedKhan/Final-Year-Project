@@ -13,6 +13,7 @@ import Select from 'react-select';
 import researchPaperType from '../../data/researchPaperType'
 import journalList from '../../data/journalList';
 import Swal from 'sweetalert2';
+import { useQuery } from 'react-query';
 
 function PaperPublish(props) {
     const { register, formState: { errors }, control, handleSubmit } = useForm();
@@ -21,6 +22,21 @@ function PaperPublish(props) {
     const {show, setShow} = props;
     const [user, userAuthLoaading] = userAuth();
     const navigate = useNavigate();
+    let authors = [];
+    let coAuthors = [];
+
+    const {data: authorData, isLoading: authorDataLoaading, refetch} = useQuery('authorDataAuth', () => {
+        return  fetch(`http://localhost:8000/api/v1/user/authors/selection`, {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json'
+                },
+            }).then(res => res.json())
+        })
+    
+    if(authorDataLoaading){
+        return <UserAuthLoadingPage/>
+    }
 
     if(userAuthLoaading==false){
         if(user?.status=='fail'){
@@ -33,7 +49,24 @@ function PaperPublish(props) {
         )
     }
 
-   
+
+   authorData.data.map(d => {
+        let obj = {
+            label: <div className="flex items-center">
+            <div className="avatar">
+                <div className="w-6 rounded-full">
+                    <img src={d.profileImage} />
+                </div>
+            </div>
+            <div className="ml-2">{d.name}</div>
+        </div>,
+            value: [d.id, d.name]
+        }
+        authors.push(obj);
+        coAuthors.push(obj);
+   })
+
+   console.log(authors);
 
     const onSubmit = async data => {
         console.log(data);
@@ -58,7 +91,20 @@ function PaperPublish(props) {
         publishData.file = "files";
         let userId = localStorage.getItem('userId');
         publishData.userId = userId;
+
+        let authorsdata = [];
+        publishData.authors.map(d => {
+            authorsdata.push(d.value[0]);
+        })
+        publishData.authors = authorsdata;
+
+        let coauthorsdata = [];
+        publishData.coAuthors.map(d => {
+            coauthorsdata.push(d.value[0]);
+        })
+        publishData.coAuthors = coauthorsdata;
         
+        console.log(publishData);
         fetch(`http://localhost:8000/api/v1/publish-paper-draft/submit`,{
             method: 'POST',
             headers:{
@@ -374,6 +420,59 @@ function PaperPublish(props) {
                                                     </label>
                                                 </div>
                                             </div>
+                                            
+                                            {/* Author Select */}
+                                            <div class="form-control mt-[-15px]">
+                                                <label class="label mb-[-5px]">
+                                                    <span class="label-text">Author</span>
+                                                </label>
+                                                <Controller
+                                                    name="authors"
+                                                    control={control}
+                                                    render={({ 
+                                                        field: {onChange, value, ref}
+                                                    }) => (
+                                                    <Select
+                                                        options={authors}
+                                                        isMulti
+                                                        className="text-sm rounded-[10px]"
+                                                        value={value}
+                                                        onChange={onChange}
+                                                        inputRef={ref}
+                                                    />
+                                                    )}
+                                                    
+                                                />
+                                                <label class="label ">
+                                                    {errors.authors?.type === 'required' && <span class="label-text-alt text-red-600">{errors.authors.message}</span>}
+                                                </label>
+                                            </div>        
+                                            {/* Co Author Select */}
+                                            <div class="form-control mt-[-15px]">
+                                                <label class="label mb-[-5px]">
+                                                    <span class="label-text">Co - Author</span>
+                                                </label>
+                                                <Controller
+                                                    name="coAuthors"
+                                                    control={control}
+                                                    render={({ 
+                                                        field: {onChange, value, ref}
+                                                    }) => (
+                                                    <Select
+                                                        options={coAuthors}
+                                                        isMulti
+                                                        className="text-sm rounded-[10px]"
+                                                        value={value}
+                                                        onChange={onChange}
+                                                        inputRef={ref}
+                                                    />
+                                                    )}
+                                                   
+                                                />
+                                                <label class="label ">
+                                                    {errors.coAuthors?.type === 'required' && <span class="label-text-alt text-red-600">{errors.coAuthors.message}</span>}
+                                                </label>
+                                            </div>   
 
                                             <div class="form-control mt-2">
                                                 <button type='submit' class="btn  text-white">Next</button>
