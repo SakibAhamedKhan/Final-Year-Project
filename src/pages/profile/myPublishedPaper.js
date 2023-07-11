@@ -4,10 +4,9 @@ import PaperPublishDraftCard from "../paperPublishDraft/paperPublishDraftCard";
 import MyPublishedPaperCard from "./myPublishedPaperCard";
 
 
-const MyPublishedPaper = () => {
-
+const MyPublishedPaper = (props) => {
+    const { id } = props;
     const {data:publishedPaperData, isLoading, refetch} = useQuery('draftData', () => {
-        let id = localStorage.getItem('userId');
         return  fetch(`http://localhost:8000/api/v1/published-paper/${id}`,{
             method: 'GET',
             headers:{
@@ -32,7 +31,7 @@ const MyPublishedPaper = () => {
 
     return (
         <div>
-            <p className="text-blue-500 text-center font-semibold text-xl">My Published Content</p>
+            <p className="text-blue-500 text-center font-semibold text-xl">Published Contents</p>
             {
                 publishedPaperData.data?
                 publishedPaperData.data.map((d, index) => <MyPublishedPaperCard data={d} index={index} refetch={refetch} />)

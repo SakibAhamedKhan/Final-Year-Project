@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {IoArrowBackCircleSharp} from "react-icons/io5"
 import {FiBookOpen} from "react-icons/fi"
 import ConvertTime from "../paperSearch/converttime";
+import AuthorShow from "../shared/authorShow";
 
 const PublishedPaperView = (props) => {
     const { published_id } = useParams();
@@ -21,6 +22,28 @@ const PublishedPaperView = (props) => {
             setPaperData(data.data);
         })  
     },[])
+
+
+    const authorShow = () => {
+        return(
+            <div className="inline flex my-4">
+                {paperData?.authors?.map((d, index)=> {
+                    return <AuthorShow key={d} id={d}/>
+                })}
+            </div>
+        )
+    }
+
+    const coAuthorShow = () => {
+        return(
+            <div className="inline flex my-4">
+                {paperData?.coAuthors?.map((d, index)=> {
+                    return <AuthorShow key={d} id={d}/>
+                })}
+            </div>
+        )
+    }
+
     return (
         <div className='bg-gray-100 h-screen overflow-y-scroll'>
             <div className='flex flex-row justify-center items-center my-10'>
@@ -58,6 +81,18 @@ const PublishedPaperView = (props) => {
                             <div className="font-semibold"><p className="text-sm inline"> Published in journal: </p><ConvertTime className="inline" date={paperData.date} ></ConvertTime></div>
                             <div className="font-semibold"><p className="text-sm inline"> Published here: </p><ConvertTime className="inline" date={paperData.createdAt} ></ConvertTime></div>
 
+                            <div className="my-2">
+                                <h2 className="bg-blue-200  w-fit rounded-md px-2 py-[3px] text-black inline">Authors: </h2> 
+                            </div>
+                            <div className="">
+                                    {authorShow()}
+                            </div>
+                            <div className="my-2">
+                                <h2 className="bg-orange-200  w-fit rounded-md px-2 py-[3px]  text-black inline">Co - Authors: </h2> 
+                            </div>
+                            <div className="">
+                                    {coAuthorShow()}
+                            </div>
                             
                             <button className='btn btn-accent w-[250px] mt-2'>
                                 <div className="flex justify-center items-center">

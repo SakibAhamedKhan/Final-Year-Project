@@ -43,7 +43,7 @@ const MyPublishedPaperCard  = (props) => {
 
     const authorShow = () => {
         return(
-            <div className="inline">
+            <div className="inline flex my-4">
                 {data?.authors?.map((d, index)=> {
                     return <AuthorShow key={d} id={d}/>
                 })}
@@ -53,7 +53,7 @@ const MyPublishedPaperCard  = (props) => {
 
     const coAuthorShow = () => {
         return(
-            <div className="inline">
+            <div className="inline flex my-4">
                 {data?.coAuthors?.map((d, index)=> {
                     return <AuthorShow key={d} id={d}/>
                 })}
@@ -73,10 +73,16 @@ const MyPublishedPaperCard  = (props) => {
                         <div className="flex items-center my-1"><p className="text-sm mr-2 mt-[-2px]">Published here: </p><ConvertTime date={data.createdAt} ></ConvertTime></div>
 
                         <div className="my-2">
-                            <h2 className="bg-blue-200  w-fit rounded-md px-2 py-[3px] text-black inline">Authors: </h2> {authorShow()}
+                            <h2 className="bg-blue-200  w-fit rounded-md px-2 py-[3px] text-black inline">Authors: </h2> 
+                            <div className="">
+                                {authorShow()}
+                            </div>
                         </div>
                         <div className="my-2">
-                            <h2 className="bg-orange-200  w-fit rounded-md px-2 py-[3px]  text-black inline">Co - Authors: </h2> {coAuthorShow()}
+                            <h2 className="bg-orange-200  w-fit rounded-md px-2 py-[3px]  text-black inline">Co - Authors: </h2> 
+                        </div>
+                        <div className="">
+                                {coAuthorShow()}
                         </div>
                     </div>
                     <div className="card-actions">

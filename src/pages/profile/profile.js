@@ -135,7 +135,7 @@ function Profile(props) {
                     {/* Published paper section */}
                     <div className="flex-1 mr-6 overflow-y-scroll scrollbar-hide">
                         <div className="card bg-base-100 drop-shadow-md rounded-[5px] p-8">
-                                <MyPublishedPaper/>
+                                <MyPublishedPaper id={user?.data?._id}/>
                         </div>
                     </div>
 

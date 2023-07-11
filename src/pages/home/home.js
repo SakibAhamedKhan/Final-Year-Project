@@ -12,6 +12,7 @@ import Signup from '../account/signup';
 import PaperPublishDraft from '../paperPublishDraft/paperPublishDraft';
 import PaperPublishDraftView from '../paperPublishDraft/paperPublishDraftView';
 import PublishedPaperView from '../profile/publishedPaperView';
+import ProfileViewed from '../profile/profileViewed';
 
 function Home() {
     const [show, setShow] = useState(true);
@@ -36,6 +37,8 @@ function Home() {
                 <Route path='/community' element={<Community show={show} setShow={setShow}></Community>}></Route>
 
                 <Route path='/profile' element={<Profile show={show} setShow={setShow}></Profile>}></Route>
+
+                <Route path='/userprofile/:user_id' element={<ProfileViewed show={show} setShow={setShow}></ProfileViewed>}></Route>
 
                 <Route path='/login' element={<Login></Login>}></Route>
 
