@@ -50,7 +50,7 @@ const PublishedPaperView = (props) => {
                 {
                     paperData?
                     <div className="card bg-base-100 w-[900px] drop-shadow-md p-10">
-                        <button onClick={() => navigate('/profile')} className='btn btn-sm btn-warning w-[100px] mt-6 mx-6'>
+                        <button onClick={()=>history.back()} className='btn btn-sm btn-warning w-[100px] mt-6 mx-6'>
                             <div className="flex justify-center items-center">
                                 <IoArrowBackCircleSharp className='text-xl mr-1'/>  
                                 <p className="mt-[2px]">Back</p>

@@ -20,7 +20,7 @@ const AuthorShow = (props) => {
     }
     return (
         <div className="inline mr-2 text-blue-600 font-bold cursor-pointer">
-              <a target="_blank" href={`http://localhost:3000/userprofile/${id}`} className="flex items-center border-2 border-zinc-400	 w-fit px-2 py-1 rounded-md drop-shadow-md inline">
+              <a  href={`http://localhost:3000/userprofile/${id}`} className="flex items-center border-2 border-zinc-400	 w-fit px-2 py-1 rounded-md drop-shadow-md inline">
                 <div className="avatar inline mr-1">
                     <div className="w-6 rounded-full">
                         <img src={user?.data?.profileImage}/>

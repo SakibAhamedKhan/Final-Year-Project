@@ -66,7 +66,6 @@ function PaperPublish(props) {
         coAuthors.push(obj);
    })
 
-   console.log(authors);
 
     const onSubmit = async data => {
         console.log(data);
@@ -78,7 +77,6 @@ function PaperPublish(props) {
             setPart(3);
         }
     }
-    console.log(publishData);
 
 
     // Submit Now Button Onclick

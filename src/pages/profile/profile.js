@@ -147,7 +147,7 @@ function Profile(props) {
                             <div className="flex justify-between items-center">
                                 <div>
                                     <h2 className="font-semibold text-lg">Welcome,</h2>
-                                    <p className="text-md">{user.data.firstName} {user.data.lastName}</p>
+                                    <p className="text-md">{user.data.firstName}</p>
                                 </div>
                                 <div>
                                 {
@@ -189,7 +189,14 @@ function Profile(props) {
                                 </form>
                             </Modal>
 
-                            
+                            <div className="flex justify-between">
+                                <div className="font-bold flex text-sm mb-2 ">Following: {user.data.following.length}</div>
+                                
+                                <div className="font-bold flex text-sm ">Foll0wers: {user.data.followers.length}</div>
+                            </div>
+
+                            <div className="divider mt-[-5px] mb-[-5px]"></div> 
+
                             <div className="font-bold flex text-sm">Name: </div>
                             <p className="font-medium text-sm mb-2">{user.data.firstName} {user.data.lastName}</p>
 

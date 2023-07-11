@@ -4,7 +4,7 @@ import PaperPublishDraftCard from "../paperPublishDraft/paperPublishDraftCard";
 import MyPublishedPaperCard from "./myPublishedPaperCard";
 
 
-const MyPublishedPaper = (props) => {
+const MyPublishedPaper =  (props) => {
     const { id } = props;
     const {data:publishedPaperData, isLoading, refetch} = useQuery('draftData', () => {
         return  fetch(`http://localhost:8000/api/v1/published-paper/${id}`,{
@@ -28,7 +28,7 @@ const MyPublishedPaper = (props) => {
            
         )
     }
-
+    
     return (
         <div>
             <p className="text-blue-500 text-center font-semibold text-xl">Published Contents</p>

@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import Modal from 'react-modal';
 import { useQuery } from "react-query";
+import { InfinitySpin } from "react-loader-spinner";
 
 
 function ProfileViewed(props) {
@@ -22,7 +23,9 @@ function ProfileViewed(props) {
     const [user, userAuthLoaading, refetch] = userAuth();
     const navigate = useNavigate();
     const [modalIsOpen, setIsOpen] = useState(false);
-
+    const [followButtonLoading, setFollowButtonLoading] = useState(false);
+    const [unFollowButtonLoading, setUnFollowButtonLoading] = useState(false);
+    
 
     const customStyles = {
         content: {
@@ -36,7 +39,7 @@ function ProfileViewed(props) {
           padding: '30px'
         },
       };
-      const {data: userView, isLoading: userViewAuthLoaading, userViewRefetch} = useQuery('userView', () => {
+      const {data: userView, isLoading: userViewAuthLoaading, refetch: userViewRefetch} = useQuery('userView', () => {
         return  fetch(`http://localhost:8000/api/v1/user/${user_id}`, {
                 method: 'GET',
                 headers: {
@@ -63,7 +66,12 @@ function ProfileViewed(props) {
     
     if(userViewAuthLoaading){
         return (
-            <UserAuthLoadingPage show={show} setShow={setShow}/>
+            <div className="flex justify-center items-center">
+            <InfinitySpin
+                width='200'
+                color="#4fa94d"
+            />
+        </div>
         )
     }
 
@@ -79,8 +87,78 @@ function ProfileViewed(props) {
         navigate('/profile')
     }
 
-    
+    const handleFollow = () => {
+        setFollowButtonLoading(true);
+        const doc = {
+            followClicked: user?.data?._id,
+            followed: userView?.data?._id,
+        }
+        fetch(`http://localhost:8000/api/v1/user/follow`, {
+                method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(doc)
+            }).then(res => res.json())
+            .then(data => {
+                if(data.status === "success"){
+                    setFollowButtonLoading(false);
+                    refetch();
+                    userViewRefetch();
+                }
+            })
+    }
 
+    const handleUnfollow = () => {
+        setUnFollowButtonLoading(true);
+        const doc = {
+            followClicked: user?.data?._id,
+            followed: userView?.data?._id,
+        }
+        fetch(`http://localhost:8000/api/v1/user/unfollow`, {
+                method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(doc)
+            }).then(res => res.json())
+            .then(data => {
+                if(data.status === "success"){
+                    setUnFollowButtonLoading(false);
+                    refetch();
+                    userViewRefetch();
+                }
+            })
+    }
+
+    const checkFollow = () => {
+        console.log("yes");
+        let flag=0;
+        for(let i=0 ;i<user?.data?.following.length; i++){
+            if(user?.data?.following[i] == userView?.data?._id){
+                flag=1;
+                break;
+            }
+        }
+
+        if(flag==1){
+            return <>
+                {
+                    unFollowButtonLoading?
+                    <button type='submit'  className="btn btn-disabled btn-sm btn-error text-sm mb-2 text-white capitalize ml-2" >Loading...</button>
+                    :
+                    <button type='submit'  className="btn btn-sm btn-error text-sm mb-2 text-white capitalize ml-2" onClick={()=> handleUnfollow()}>Unfollow</button>
+                }
+            </>
+            
+        }
+        return <> {
+            followButtonLoading?
+            <button type='submit'  className="btn btn-disabled btn-sm btn-info text-sm mb-2 text-white capitalize ml-2">Loading...</button>
+            :
+            <button type='submit'  className="btn btn-sm btn-info text-sm mb-2 text-white capitalize ml-2" onClick={() => handleFollow()}>Follow</button>
+        } </>
+    }
     return (
         <div className='flex flex-row'>
             <div className={`${show? '': 'bg-white w-[50px]'} border-r-2 h-screen border-gray-2001`} >
@@ -116,7 +194,7 @@ function ProfileViewed(props) {
                                         </div>
                                     </div>
                                     :
-                                    <div className="mb-4 flex justify-center items-center text-4xl">
+                                    <div className="mb-2 flex justify-center items-center text-4xl">
                                         <BsImage/>
                                     </div>
                                 }
@@ -129,8 +207,19 @@ function ProfileViewed(props) {
                            
 
                             
-                        
+                            <div className="flex justify-center">
+                                        {
+                                            checkFollow()
+                                        }
+                            </div>
 
+                            <div className="flex justify-between">
+                                <div className="font-bold flex text-sm mb-2 ">Following: {userView.data.following.length}</div>
+                                
+                                <div className="font-bold flex text-sm ">Foll0wers: {userView.data.followers.length}</div>
+                            </div>
+
+                            <div className="divider mt-[-5px] mb-[-5px]"></div> 
                             <div className="font-bold flex text-sm">Recent Institute: </div>
                             <p className="font-medium text-sm mb-2" >{userView.data.university}</p>
 
@@ -148,7 +237,7 @@ function ProfileViewed(props) {
                             <div className="font-bold flex text-sm">Contact Number: </div>
                             <p className="font-medium text-sm mb-2">{userView.data.contactNumber}</p>
 
-
+                            
                         </div>
                         
                         {/* Profile Follower Suggection*/}
