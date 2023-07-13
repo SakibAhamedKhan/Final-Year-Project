@@ -90,9 +90,9 @@ function PaperPublishDraft(props) {
                 <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
                     {/* <h2 className="text-center font-bold text-xl">Publish Your Paper</h2> */}
                     {
-                        (draftData.data.length!==0) ?
+                        (draftData?.data?.length) ?
 
-                        draftData.data.map((d, index) => <PaperPublishDraftCard data={d} index={index} ModalShow={ModalShow} refetch={refetch} />)
+                        draftData?.data.map((d, index) => <PaperPublishDraftCard data={d} index={index} ModalShow={ModalShow} refetch={refetch} />)
                         
                         :
                         

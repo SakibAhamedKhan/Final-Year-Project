@@ -39,8 +39,8 @@ const MyPublishedPaper =  (props) => {
             <p className="text-blue-500 text-center font-semibold text-xl">Published Contents</p>
                 <div className="flex justify-between w-full items-center">
                     <div className="font-semibold">
-                        <p className="inline mr-6">Authored: {publishedPaperData?.data?.authors.length}</p>
-                        <p className="inline">Co-Authored: {publishedPaperData?.data?.coAuthors.length}</p> 
+                        <p className="inline mr-6">Authored: {publishedPaperData?.data?.authorsSize}</p>
+                        <p className="inline">Co-Authored: {publishedPaperData?.data?.coAuthorsSize}</p> 
                     </div>
                     <div>
                         <p className="mr-4 font-semibold inline">Filter</p>
@@ -55,13 +55,13 @@ const MyPublishedPaper =  (props) => {
                 publishedPaperData.data?
                 <>
                     {
-                        filter==="all" && publishedPaperData.data.all.map((d, index) => <MyPublishedPaperCard data={d} index={index} refetch={refetch} />)
+                        filter==="all" && publishedPaperData?.data?.all?.map((d, index) => <MyPublishedPaperCard data={d} index={index} refetch={refetch} />)
                     }
                     {
-                        filter==="authored" && publishedPaperData.data.authors.map((d, index) => <MyPublishedPaperCard data={d} index={index} refetch={refetch} />)
+                        filter==="authored" && publishedPaperData?.data?.authors?.map((d, index) => <MyPublishedPaperCard data={d} index={index} refetch={refetch} />)
                     }
                     {
-                        filter==="coauthored" && publishedPaperData.data.coAuthors.map((d, index) => <MyPublishedPaperCard data={d} index={index} refetch={refetch} />)
+                        filter==="coauthored" && publishedPaperData?.data?.coAuthors?.map((d, index) => <MyPublishedPaperCard data={d} index={index} refetch={refetch} />)
                     }
                 </>
                 :
