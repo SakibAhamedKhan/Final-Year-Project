@@ -8,6 +8,10 @@ import UpperNavbar from "../shared/upperNavbar";
 import userAuth from "../../hooks/userAuth";
 import { useNavigate } from "react-router-dom";
 import UserAuthLoadingPage from "../shared/userAuthLoadingPage";
+import { useQuery } from "react-query";
+import AuthorShow from "../shared/authorShow";
+import { InfinitySpin } from "react-loader-spinner";
+import PaperCard from "./paperCard";
 
 function PaperSearch(props) {
     const [data, setData] = useState([]);
@@ -18,23 +22,32 @@ function PaperSearch(props) {
     //const [user, userAuthLoaading] = userAuth();
     //const navigate = useNavigate();
 
-   
+    const {data: paper, isLoading: paperLoading, refetch} = useQuery('paperFetch', () => {
+        return  fetch(`http://localhost:8000/api/v1/published-paper/get-all-papers/paper`, {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json'
+                },
+            }).then(res => res.json())
+        })
+    
+    
 
-    useEffect(() => {
-        setData(paper.data);
-        setWaitForData(true);
-    }, []);
+    // useEffect(() => {
+    //     setData(paper.data);
+    //     setWaitForData(true);
+    // }, []);
 
-    useEffect(() => {
-        const filteredData = paper.data.filter(item => {
-            const title = item.paper_tile.toLowerCase();
-            const searchT = searchTyped.toLowerCase();
-            return title.includes(searchT);
-        }
-        );
-        setData(filteredData);
-        setWaitForData(true);
-    }, [searchTyped])
+    // useEffect(() => {
+    //     const filteredData = paper.data.filter(item => {
+    //         const title = item.paper_tile.toLowerCase();
+    //         const searchT = searchTyped.toLowerCase();
+    //         return title.includes(searchT);
+    //     }
+    //     );
+    //     setData(filteredData);
+    //     setWaitForData(true);
+    // }, [searchTyped])
 
     /* 
         User Auth Part (Paper search don't need to protect for login) 
@@ -49,12 +62,25 @@ function PaperSearch(props) {
     //         <UserAuthLoadingPage show={show} setShow={setShow}/>
     //     )
     // }
-
+    if(paperLoading){
+        return (
+           
+            <div className="flex justify-center items-center">
+                <InfinitySpin
+                    width='200'
+                    color="#4fa94d"
+                />
+            </div>
+           
+        ) 
+    }
     const searchInput = event => {
         setWaitForData(false);
         setSearchTyped(event.target.value);
         
     }
+
+    
 
     return (
         <div className='flex flex-row'>
@@ -68,46 +94,17 @@ function PaperSearch(props) {
                 </div>
                 <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
                     {/* Search Input Section */}
-                    <div className="self-center w-[600px]">
+                    <div className="self-center w-[500px] mt-2 mb-[-5px]">
                         <input type="text" onChange={searchInput} placeholder="Search here..." class="input input-bordered input-sm w-full border-0 focus:outline-0 drop-shadow-md rounded-[5px]" />
-                        <p className="mb-[-20px] mt-[20px] text-gray-400">{data.length} result showing now</p>
+                        <p className="mb-[-25px] mt-[15px] text-gray-400">{data.length} result showing now</p>
                     </div>
 
                     
                     {/* Search Results */}
-                    <div className="self-center w-[600px]">
+                    <div className="self-center w-[800px]">
                         {
-                            waitForData ?
-                                data.map((d, index) => <div className="card bg-base-100 drop-shadow-md my-10 rounded-[5px]">
-                                    <div className="p-4">
-                                        <h2 className="font-bold">{d.paper_tile}</h2>
-                                        <ConvertTime key={d._id} date={d.date} />
-
-                                        <div className="flex items-center pt-3 justify-between">
-                                            {/* Profile Information */}
-                                            <div className="flex items-center ">
-                                                <div className="avatar">
-                                                    <div className="w-6 rounded-full">
-                                                        <img src={`${image1}`} />
-                                                    </div>
-                                                </div>
-                                                <div className="ml-2">
-                                                    <h2 className="text-sm font-semibold">{d.published_user.name}</h2>
-                                                </div>
-                                            </div>
-                                            {/* Explore Button */}
-                                            <div>
-                                                <button class="btn btn-sm gap-2 btn-outline capitalize rounded-[5px]">
-                                                    <MdOutlineTravelExplore />
-                                                    Explore
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                )
-                                :
-                                <div>Loading</div>
+                            paper.data.map((d, index) => <PaperCard key={index} d={d}/>)
+                                
                         }
                     </div>
                 </div>
