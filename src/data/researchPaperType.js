@@ -1,6 +1,6 @@
 
 const researchPaperType = [
-    {label: "Paper", value: "Paper"},
+    {label: "Article", value: "Article"},
     {label: "Preprint", value: "Preprint"},
     {label: "Conference Paper", value: "Conference Paper"},
     {label: "Presentation", value: "Presentation"},

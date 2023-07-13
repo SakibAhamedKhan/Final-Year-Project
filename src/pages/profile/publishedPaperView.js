@@ -65,7 +65,7 @@ const PublishedPaperView = (props) => {
                         </button>
                         <div className="flex">
                            <div className="w-1/2">
-                           <p className="text-3xl font-semibold mb-2"><p className="font-semibold inline"></p> {paperData.title}</p>
+                           <p className="text-2xl font-semibold mb-2"><p className="font-semibold inline"></p> {paperData.title}</p>
                             
                             <h2 className="bg-green-200  w-fit rounded-md px-2 py-[1px] my-1 text-gray-500">{paperData.researchPaperType}</h2>
                             

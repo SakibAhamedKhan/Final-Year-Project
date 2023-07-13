@@ -75,7 +75,7 @@ const PaperPublishDraftCard  = (props) => {
     const handleDeleteConformation = () => {
         Swal.fire({
             icon: 'info',
-            title: `Do you want to delete this ${data.researchPaperType} thats title is: ${data.title}`,
+            title: `Do you want to delete this ${data.researchPaperType} thats title is:  ${data.title}`,
             showDenyButton: true,
             confirmButtonText: 'Delete',
           }).then((result) => {

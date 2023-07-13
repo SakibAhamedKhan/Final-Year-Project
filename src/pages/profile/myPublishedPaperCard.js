@@ -66,7 +66,7 @@ const MyPublishedPaperCard  = (props) => {
         <div>
             <div className="card w-full bg-gray-100 text-black my-6 drop-shadow-lg">
                 <div className="flex justify-between items-center p-4">
-                    <div className="">
+                    <div className="w-5/6">
                         <h4 className="font-semibold text-xl">{data.title}</h4>
                         <h2 className="bg-green-200  w-fit rounded-md px-2 py-[1px] my-1 text-gray-500">{data.researchPaperType}</h2>
                         <p>Journal: {data.journalList}</p>
@@ -85,7 +85,7 @@ const MyPublishedPaperCard  = (props) => {
                                 {coAuthorShow()}
                         </div>
                     </div>
-                    <div className="card-actions">
+                    <div className="card-actions w-1/6 flex justify-end">
                         <button className="btn btn-sm btn-warning" onClick={() => navigate(`/paperpublished/${data._id}`)}><BiShow className="text-xl mr-1"/> View</button>
                     </div>
                 </div>
