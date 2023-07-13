@@ -4,11 +4,18 @@ import {IoArrowBackCircleSharp} from "react-icons/io5"
 import {FiBookOpen} from "react-icons/fi"
 import ConvertTime from "../paperSearch/converttime";
 import AuthorShow from "../shared/authorShow";
+import { Worker } from '@react-pdf-viewer/core';
+import { Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 const PublishedPaperView = (props) => {
     const { published_id } = useParams();
     const [paperData, setPaperData] = useState({});
+    const [seeMore, setSeeMOre] = useState(false);
     const navigate = useNavigate();
+    const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/v1/published-paper/get-published-paper/${published_id}`,{
@@ -46,26 +53,27 @@ const PublishedPaperView = (props) => {
 
     return (
         <div className='bg-gray-100 h-screen overflow-y-scroll'>
-            <div className='flex flex-row justify-center items-center my-10'>
+            <div className='flex flex-row justify-center items-center my-10 mx-20'>
                 {
                     paperData?
-                    <div className="card bg-base-100 w-[900px] drop-shadow-md p-10">
-                        <button onClick={()=>history.back()} className='btn btn-sm btn-warning w-[100px] mt-6 mx-6'>
+                    <div className="card bg-base-100 w-full drop-shadow-md p-10">
+                        <button onClick={()=>history.back()} className='btn btn-sm btn-warning w-[100px] my-2 px-10'>
                             <div className="flex justify-center items-center">
                                 <IoArrowBackCircleSharp className='text-xl mr-1'/>  
                                 <p className="mt-[2px]">Back</p>
                             </div>    
                         </button>
-                        <div className="card-body">
-                           
-
-                            <p className="text-3xl font-semibold mb-2"><p className="font-semibold inline"></p> {paperData.title}</p>
+                        <div className="flex">
+                           <div className="w-1/2">
+                           <p className="text-3xl font-semibold mb-2"><p className="font-semibold inline"></p> {paperData.title}</p>
                             
                             <h2 className="bg-green-200  w-fit rounded-md px-2 py-[1px] my-1 text-gray-500">{paperData.researchPaperType}</h2>
                             
                             <p className="text-md text-blue-600 mb-2"><p className="font-semibold inline">Journal:</p> {paperData.journalList}</p>
 
-                            <p className="text-md mb-2"><p className="font-semibold inline">Abstract:</p> {paperData.abstract}</p>
+                            <p className="text-md mb-2"><p className="font-semibold inline">Abstract:</p>
+                            {paperData.abstract}
+                             </p>
 
                             <p className="text-md mb-2"><p className="font-semibold inline">Issue:</p> {paperData.issue}</p>
 
@@ -94,12 +102,24 @@ const PublishedPaperView = (props) => {
                                     {coAuthorShow()}
                             </div>
                             
-                            <button className='btn btn-accent w-[250px] mt-2'>
+                            
+                            {/* <button className='btn btn-accent w-[250px] mt-2'>
                                 <div className="flex justify-center items-center">
                                 <FiBookOpen className='text-xl mr-2'/> 
                                 <p className="mt-[2px]"> View Your Document </p>
                                 </div>
-                            </button>
+                            </button> */}
+                           </div>
+
+                            <div className="w-1/2 ml-4">
+                                <div  className="h-[800px]">
+                                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                        <Viewer  plugins={[defaultLayoutPluginInstance]} fileUrl={`${paperData.file}`}/>;
+                                    </Worker>
+                                </div>
+                            </div>
+
+                            
                         </div>
                     </div>
                     :

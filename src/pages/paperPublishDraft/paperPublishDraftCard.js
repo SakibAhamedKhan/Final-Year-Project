@@ -123,12 +123,12 @@ const PaperPublishDraftCard  = (props) => {
         <div>
             <div className="card w-full bg-base-100 text-black my-3 drop-shadow-md">
                 <div className="flex justify-between items-center p-4">
-                    <div className="">
+                    <div className="w-3/4">
                         <h2 className="card-title">{data.researchPaperType}</h2>
                         <h4>Title: {data.title}</h4>
                         <p>Journal: {data.journalList}</p>
                     </div>
-                    <div className="card-actions">
+                    <div className="card-actions w-fit">
                         <button className="btn btn-sm btn-warning" onClick={() => navigate(`/paperpublishdraft/${data._id}`)}><BiShow className="text-xl mr-1"/> View & Edit</button>
                         <button onClick={handlePublishConformation} className="btn btn-sm btn-accent">Publish</button>
                         <button onClick={handleDeleteConformation} className="btn btn-sm btn-error">Delete</button>

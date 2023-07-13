@@ -14,6 +14,8 @@ import researchPaperType from '../../data/researchPaperType'
 import journalList from '../../data/journalList';
 import Swal from 'sweetalert2';
 import { useQuery } from 'react-query';
+import storage from '../../base';
+import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
 
 function PaperPublish(props) {
     const { register, formState: { errors }, control, handleSubmit } = useForm();
@@ -22,6 +24,10 @@ function PaperPublish(props) {
     const {show, setShow} = props;
     const [user, userAuthLoaading] = userAuth();
     const navigate = useNavigate();
+    const [progrss, setProgrss] = useState(0);
+    const [isLoading, setIsLoading] = useState();
+    const [url, setUrl] = useState();
+
     let authors = [];
     let coAuthors = [];
 
@@ -69,6 +75,30 @@ function PaperPublish(props) {
 
     const onSubmit = async data => {
         console.log(data);
+        // const file = data.file[0];
+        // const storageRef = ref(storage, `/files/${file.name}`);
+        // const uploadTask = uploadBytesResumable(storageRef, file);
+
+        // uploadTask.on("state_changed", (snapshot) => {
+        //     var progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        //     console.log(progress);
+        //     setProgrss(progress);
+        // }, (err) => {
+        //     console.log(err);
+        //     setIsLoading(false);
+        // },
+        //     () => {
+        //         getDownloadURL(uploadTask.snapshot.ref)
+        //             .then(url => {
+        //                 console.log(url);
+        //                 setUrl(url);
+        //                 setIsLoading(false);
+        //             })
+        //     }
+        // )
+
+
+
         setPublishData({...publishData, ...data});
         if(part===1){
             setPart(2);
@@ -84,9 +114,42 @@ function PaperPublish(props) {
         console.log(publishData);
     }
 
+    const handleUploadSaveNow = () => {
+
+    }
     // Save Draft Button Onclick
+    const handleUploadSaveDraft = () => {
+        // Upload the pdf to the Google Firebase and get the url
+        const file = publishData.file[0];
+        const storageRef = ref(storage, `/files/${file.name} ${Date.now()}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on("state_changed", (snapshot) => {
+            var progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            console.log(progress);
+            setProgrss(progress);
+        }, (err) => {
+            console.log(err);
+            setIsLoading(false);
+        },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref)
+                    .then(url => {
+                        console.log(url);
+                        setUrl(url);
+                        publishData.file = url;
+                        setIsLoading(false);
+                        saveDraft();
+                    })
+            }
+        )
+        
+
+        
+       
+    }
     const saveDraft = () => {
-        publishData.file = "files";
+        
         let userId = localStorage.getItem('userId');
         publishData.userId = userId;
 
@@ -495,8 +558,8 @@ function PaperPublish(props) {
                                         part===3 && <div className='mt-12'>
                                             <h2 className='font-bold text-2xl mb-2 text-center'>Choose the submit</h2>
                                             <div className='flex flex-col'>
-                                                <button onClick={submitNow} class="btn-success text-white my-2 px-5 py-2 rounded-[5px]">Submit Now</button>
-                                                <button onClick={saveDraft} class="btn-primary text-white my-2 px-5 py-2 rounded-[5px]">Save to draft and Submit later</button>
+                                                <button onClick={handleUploadSaveNow} class="btn-success text-white my-2 px-5 py-2 rounded-[5px]">Submit Now</button>
+                                                <button onClick={handleUploadSaveDraft} class="btn-primary text-white my-2 px-5 py-2 rounded-[5px]">Save to draft and Submit later</button>
                                             </div>
                                         </div>
                                     }
