@@ -21,10 +21,16 @@ function Navbar(props) {
                         <p className={`${show ? '':'hidden'}`}>Search Paper</p>
                     </div>      
                 </NavLink></li>
-                <li><NavLink to='/newsFeed' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>
+                {/* <li><NavLink to='/newsFeed' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>
                     <div className="flex flex-row jusity-start items-center">
                         <div className={` ${show? 'pr-2':''}  text-lg`}><BiNews/></div>
                         <p className={`${show ? '':'hidden'}`}>News Feed</p>
+                    </div>   
+                </NavLink></li> */}
+                <li><NavLink to='/people' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>
+                    <div className="flex flex-row jusity-start items-center">
+                        <div className={` ${show? 'pr-2':''}  text-lg`}><MdOutlineManageSearch/></div>
+                        <p className={`${show ? '':'hidden'}`}>Search People</p>
                     </div>   
                 </NavLink></li>
                 <li><NavLink to='/paperpublish' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>

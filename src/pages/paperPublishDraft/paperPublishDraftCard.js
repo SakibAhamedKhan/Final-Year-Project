@@ -116,7 +116,7 @@ const PaperPublishDraftCard  = (props) => {
                 refetch();
             }
         })
-    }
+    }   
 
     console.log(data);
     return (

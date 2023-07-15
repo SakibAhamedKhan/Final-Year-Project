@@ -13,6 +13,7 @@ import PaperPublishDraft from '../paperPublishDraft/paperPublishDraft';
 import PaperPublishDraftView from '../paperPublishDraft/paperPublishDraftView';
 import PublishedPaperView from '../profile/publishedPaperView';
 import ProfileViewed from '../profile/profileViewed';
+import SearchPeople from '../people/searchPeople';
 
 function Home() {
     const [show, setShow] = useState(true);
@@ -24,6 +25,8 @@ function Home() {
                 <Route path='/newsFeed' element={<Newsfeed show={show} setShow={setShow}></Newsfeed>}></Route>
 
                 <Route path='/' element={<PaperSearch show={show} setShow={setShow}></PaperSearch>}></Route>
+
+                <Route path='/people' element={<SearchPeople show={show} setShow={setShow}></SearchPeople>}></Route>
 
                 <Route path='/paperpublish' element={<PaperPublish show={show} setShow={setShow}></PaperPublish>}></Route>
 
