@@ -15,42 +15,58 @@ import PaperCard from "./paperCard";
 
 function PaperSearch(props) {
     const [data, setData] = useState([]);
+    const [reserveData, setReserveData] = useState([]);
     const [waitForData, setWaitForData] = useState(false);
     const [searchTyped, setSearchTyped] = useState('');
+    const [paper, setPaper] = useState({});
+    const [loading, setLoading] = useState(false);
     const {show, setShow} = props;
+
 
     //const [user, userAuthLoaading] = userAuth();
     //const navigate = useNavigate();
 
-    //  useEffect(() => {
-    //     const filteredData = paper.data.filter(item => {
-    //         const title = item.title.toLowerCase();
-    //         const searchT = searchTyped.toLowerCase();
-    //         return title.includes(searchT);
-    //     }
-    //     );
-    //     setData(filteredData);
-    //     setWaitForData(true);
-    // }, [searchTyped])
-    const {data: paper, isLoading: paperLoading, refetch} = useQuery('paperFetch', () => {
-        return  fetch(`http://localhost:8000/api/v1/published-paper/get-all-papers/paper`, {
+     
+    // const {data: paper, isLoading: paperLoading, refetch} = useQuery('paperFetch2', () => {
+    //     return  fetch(`http://localhost:8000/api/v1/published-paper/get-all-papers/paper`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'content-type': 'application/json'
+    //             },
+    //         }).then(res => res.json())
+    //         .then(data =>{
+    //             setData(data);
+    //         })
+    //     })
+    
+    
+
+    useEffect(() => {
+        setLoading(true);
+        fetch(`http://localhost:8000/api/v1/published-paper/get-all-papers/paper`, {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json'
                 },
             }).then(res => res.json())
             .then(data =>{
-                setData(data);
+                setData(data.data);
+                setReserveData(data.data);
+                setLoading(false);
             })
-        })
-    
-    
-
-    // useEffect(() => {
-    //     setData(paper.data);
-    //     setWaitForData(true);
-    // }, []);
-
+    }, []);
+    useEffect(() => {
+        const filteredData = reserveData?.filter(item => {
+            const title = item.title.toLowerCase();
+            const searchT = searchTyped.toLowerCase();
+            console.log(item.title);
+            return title.includes(searchT);
+        }
+        );
+        console.log(filteredData);
+        setData(filteredData);
+        setWaitForData(false);
+    }, [searchTyped])
    
 
     /* 
@@ -66,34 +82,25 @@ function PaperSearch(props) {
     //         <UserAuthLoadingPage show={show} setShow={setShow}/>
     //     )
     // }
-    if(paperLoading){
-        return (
+    // if(paperLoading){
+    //     return (
            
-            <div className="flex justify-center items-center">
-                <InfinitySpin
-                    width='200'
-                    color="#4fa94d"
-                />
-            </div>
+    //         <div className="flex justify-center items-center">
+    //             <InfinitySpin
+    //                 width='200'
+    //                 color="#4fa94d"
+    //             />
+    //         </div>
            
-        ) 
-    }
+    //     ) 
+    // }
     console.log(data);
     const searchInput = event => {
         setWaitForData(true);
-        const filteredData = data.data.filter(item => {
-                    const title = item.title.toLowerCase();
-                    const searchT = searchTyped.toLowerCase();
-                    return title.includes(event.target.value);
-                }
-                );
-                setData(filteredData);
-                console.log(filteredData);
-                setWaitForData(false);
-        }
-        
+        setSearchTyped(event.target.value);
+       
 
-    
+    }   
 
     return (
         <div className='flex flex-row'>
@@ -109,17 +116,22 @@ function PaperSearch(props) {
                     {/* Search Input Section */}
                     <div className="self-center w-[500px] mt-2 mb-[-5px]">
                         <input type="text" onChange={searchInput} placeholder="Search here..." class="input input-bordered input-sm w-full border-0 focus:outline-0 drop-shadow-md rounded-[5px]" />
-                        <p className="mb-[-25px] mt-[15px] text-gray-400">{data.length} result showing now</p>
+                        {/* <p className="mb-[-25px] mt-[15px] text-gray-400"> result showing now</p> */}
                     </div>
 
                     
                     {/* Search Results */}
                     <div className="self-center w-[800px]">
                         {
-                            waitForData?
-                            <div>Loading....</div>
+                            loading || waitForData?
+                            <div className="flex justify-center items-center">
+                                <InfinitySpin
+                                    width='200'
+                                    color="#4fa94d"
+                                />
+                            </div>
                             :
-                            data?.data.map((d, index) => <PaperCard key={index} d={d}/>)
+                            data?.map((d, index) => <PaperCard key={index} d={d}/>)
                                 
                         }
                     </div>
