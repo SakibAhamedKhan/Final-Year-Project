@@ -52,10 +52,10 @@ const PaperCard = (props) => {
                                            </div>
                                             {/* Explore Button */}
                                             <div className="flex flex-col self-end justify-self-end mb-[18px]"> 
-                                                <button onClick={() => navigate(d.file)} class="w-[120px] btn btn-sm gap-2 btn-outline capitalize rounded-[5px]">
+                                                <a href={`${d.file}`} class="w-[120px] btn btn-sm gap-2 btn-outline capitalize rounded-[5px]">
                                                     <FcDownload/>
                                                     Download
-                                                </button>
+                                                </a>
                                                 <button onClick={() =>  navigate(`/paperpublished/${d._id}`)} class="w-[120px] btn mt-4 btn-sm gap-2 btn-outline capitalize rounded-[5px]">
                                                     <MdOutlineTravelExplore />
                                                     Explore

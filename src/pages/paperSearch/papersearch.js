@@ -22,6 +22,16 @@ function PaperSearch(props) {
     //const [user, userAuthLoaading] = userAuth();
     //const navigate = useNavigate();
 
+    //  useEffect(() => {
+    //     const filteredData = paper.data.filter(item => {
+    //         const title = item.title.toLowerCase();
+    //         const searchT = searchTyped.toLowerCase();
+    //         return title.includes(searchT);
+    //     }
+    //     );
+    //     setData(filteredData);
+    //     setWaitForData(true);
+    // }, [searchTyped])
     const {data: paper, isLoading: paperLoading, refetch} = useQuery('paperFetch', () => {
         return  fetch(`http://localhost:8000/api/v1/published-paper/get-all-papers/paper`, {
                 method: 'GET',
@@ -29,6 +39,9 @@ function PaperSearch(props) {
                     'content-type': 'application/json'
                 },
             }).then(res => res.json())
+            .then(data =>{
+                setData(data);
+            })
         })
     
     
@@ -38,16 +51,7 @@ function PaperSearch(props) {
     //     setWaitForData(true);
     // }, []);
 
-    // useEffect(() => {
-    //     const filteredData = paper.data.filter(item => {
-    //         const title = item.paper_tile.toLowerCase();
-    //         const searchT = searchTyped.toLowerCase();
-    //         return title.includes(searchT);
-    //     }
-    //     );
-    //     setData(filteredData);
-    //     setWaitForData(true);
-    // }, [searchTyped])
+   
 
     /* 
         User Auth Part (Paper search don't need to protect for login) 
@@ -74,11 +78,20 @@ function PaperSearch(props) {
            
         ) 
     }
+    console.log(data);
     const searchInput = event => {
-        setWaitForData(false);
-        setSearchTyped(event.target.value);
+        setWaitForData(true);
+        const filteredData = data.data.filter(item => {
+                    const title = item.title.toLowerCase();
+                    const searchT = searchTyped.toLowerCase();
+                    return title.includes(event.target.value);
+                }
+                );
+                setData(filteredData);
+                console.log(filteredData);
+                setWaitForData(false);
+        }
         
-    }
 
     
 
@@ -103,7 +116,10 @@ function PaperSearch(props) {
                     {/* Search Results */}
                     <div className="self-center w-[800px]">
                         {
-                            paper.data.map((d, index) => <PaperCard key={index} d={d}/>)
+                            waitForData?
+                            <div>Loading....</div>
+                            :
+                            data?.data.map((d, index) => <PaperCard key={index} d={d}/>)
                                 
                         }
                     </div>

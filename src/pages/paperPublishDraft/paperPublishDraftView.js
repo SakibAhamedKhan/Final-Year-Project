@@ -16,12 +16,20 @@ import Swal from 'sweetalert2';
 import PaperPublishDraftCard from './paperPublishDraftCard';
 import {IoArrowBackCircleSharp} from "react-icons/io5"
 import { useQuery } from 'react-query';
+import AuthorShow from '../shared/authorShow';
+import { Worker } from '@react-pdf-viewer/core';
+import { Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+
 
 function PaperPublishDraftView(props) {
     const { register, formState: { errors }, control, handleSubmit } = useForm();
     const { draft_id } = useParams();
     const [draftViewData, setDraftViewData] = useState({});
     const navigate = useNavigate();
+    const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
     // updated data
     const [title, setTitle] = useState('');
@@ -37,6 +45,7 @@ function PaperPublishDraftView(props) {
     const [volumn, setVolumn] = useState('');
     const [author, setAuthor] = useState([]);
     const [coAuthor, setCoAuthor] = useState([]);
+    const [data, setData] = useState({});
 
     console.log(draft_id);
 
@@ -62,6 +71,7 @@ function PaperPublishDraftView(props) {
         })
         .then(res => res.json())
         .then(data => {
+            setData(data.data);
             console.log(data);
             setDraftViewData(data.data);
             setTitle(data.data.title);
@@ -164,7 +174,123 @@ function PaperPublishDraftView(props) {
     //    result.push(authors.find(c => c.value[0] === author[i]))
     // }
     // console.log(result[0]);
+    
 
+    const handlePublishConformation = () => {
+        Swal.fire({
+            icon: 'question',
+            title: `Are you sure to publish this ${data.researchPaperType} thats title is: ${data.title}`,
+            showDenyButton: true,
+            confirmButtonText: 'Publish',
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                handlePublish();
+            } 
+          })
+    }
+
+    const handlePublish = () => {
+        console.log(data);
+
+        const publishData = {
+            abstract: data.abstract,
+            date: data.date,
+            doi: data.doi,
+            file: data.file,
+            issue: data.issue,
+            journalList: data.journalList,
+            pageEnd: data.pageEnd,
+            userId: data.userId,
+            pageStart: data.pageStart,
+            researchPaperType: data.researchPaperType,
+            title: data.title,
+            volumn: data.volumn,
+            authors: data.authors,
+            coAuthors: data.coAuthors,
+        }
+        fetch(`http://localhost:8000/api/v1/published-paper/submit`,{
+            method: 'POST',
+            headers:{
+                'content-type':'application/json'
+            },
+            body: JSON.stringify(publishData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.status==='fail'){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Ops',
+                    text: `${data.error}`,
+                    footer: ''
+                })
+
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Great',
+                    text: `Successfully published your paper`,
+                    footer: ''
+                }).then(()=>{
+                    handleDelete();
+                })
+            }
+        }) 
+    }
+
+    const handleDelete = () => {
+        fetch(`http://localhost:8000/api/v1/publish-paper-draft/remove-draft/${data._id}`,{
+            method: 'DELETE',
+            headers:{
+                'content-type':'application/json'
+            },
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.status==='fail'){
+                // Swal.fire({
+                //     icon: 'error',
+                //     title: 'Ops',
+                //     text: `${data.error}`,
+                //     footer: ''
+                // })
+
+            } else {
+                // Swal.fire({
+                //     icon: 'success',
+                //     title: 'Great',
+                //     text: `Successfully removed the draft paper!`,
+                //     footer: ''
+                // }).then(()=>{
+                    navigate('/paperpublishdraft');
+                // })
+                
+            }
+        })
+    }
+
+    const authorShow = () => {
+        return(
+            <div className="inline flex my-4">
+                {data?.authors?.map((d, index)=> {
+                    return <AuthorShow key={d} id={d}/>
+                })}
+            </div>
+        )
+    }
+
+    const coAuthorShow = () => {
+        return(
+            <div className="inline flex my-4">
+                {data?.coAuthors?.map((d, index)=> {
+                    return <AuthorShow key={d} id={d}/>
+                })}
+            </div>
+        )
+    }
     return (
         <div className='bg-gray-100 h-screen overflow-y-scroll'>
             <div className='flex flex-row justify-center items-center my-10'>
@@ -173,7 +299,7 @@ function PaperPublishDraftView(props) {
                     <div className="card bg-base-100 w-[900px] drop-shadow-md p-10">
                         <button onClick={() => navigate('/paperpublishdraft')} className='btn btn-warning w-[100px] mt-6 mx-6'><IoArrowBackCircleSharp className='text-xl mr-1'/>  Back </button>
                         <div className="card-body">
-                            <form onSubmit={handleSubmit(onSubmit)} className=''>
+                            {/* <form className=''> */}
                                 {/* Title */}
                                 <div class="form-control mt-[-15px]">
                                     <label class="label mb-[-5px]">
@@ -245,7 +371,7 @@ function PaperPublishDraftView(props) {
                                 </div>
                                 
                                 {/* File Choose */}
-                                <div class="form-control mt-[-15px]">
+                                {/* <div class="form-control mt-[-15px]">
                                     <label class="label mb-[-5px]">
                                         <span class="label-text">Choose File</span>
                                     </label>
@@ -253,7 +379,7 @@ function PaperPublishDraftView(props) {
                                     />
                                     <label class="label">
                                     </label>
-                                </div>
+                                </div> */}
 
                                  {/* Issue */}
                                  <div class="form-control mt-[-15px]">
@@ -387,11 +513,31 @@ function PaperPublishDraftView(props) {
                                         {errors.coAuthors?.type === 'required' && <span class="label-text-alt text-red-600">{errors.coAuthors.message}</span>}
                                     </label>
                                 </div>  */}
+                                <div className="my-2">
+                                <h2 className="bg-blue-200  w-fit rounded-md px-2 py-[3px] text-black inline">Authors: </h2> 
+                                </div>
+                                <div className="">
+                                        {authorShow()}
+                                </div>
+                                <div className="my-2">
+                                    <h2 className="bg-orange-200  w-fit rounded-md px-2 py-[3px]  text-black inline">Co - Authors: </h2> 
+                                </div>
+                                <div className="">
+                                        {coAuthorShow()}
+                                </div>
+
+                                {/* pdf viewer */}
+                                <h2 className="bg-orange-200  w-fit rounded-md px-2 py-[3px]  text-black inline">Document: </h2> 
+                                <div  className="h-[800px]">
+                                    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                                        <Viewer  plugins={[defaultLayoutPluginInstance]} fileUrl={`${data.file}`}/>;
+                                    </Worker>
+                                </div>
 
                                 <div class="form-control mt-2">
-                                    <button type='submit' class="btn btn-accent">Update</button>
+                                    <button onClick={()=>handlePublishConformation()} class="btn btn-accent">Publish Now</button>
                                 </div>
-                            </form>        
+                            {/* </form>         */}
 
                         </div>
                     </div>
