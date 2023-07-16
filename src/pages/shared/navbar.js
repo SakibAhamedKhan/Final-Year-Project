@@ -54,6 +54,12 @@ function Navbar(props) {
                     </div>     
                 </NavLink></li> */}
 
+                <li><NavLink to='/following' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>
+                    <div className="flex flex-row jusity-start items-center">
+                        <div className={` ${show? 'pr-2':''}  text-lg`}><RiUserFollowFill/></div>
+                        <p className={`${show ? '':'hidden'}`}>Government Project</p>
+                    </div>     
+                </NavLink></li>
 
                  <li><NavLink to='/follower' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>
                     <div className="flex flex-row jusity-start items-center">
