@@ -56,12 +56,12 @@ function UpperNavbar(props) {
                                 <div>Profile</div>
                                 </div>
                             </li>
-                            <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full w-full">
+                            {/* <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full w-full">
                                 <div className="flex flex-row items-center">
                                 <div className="text-lg pr-2"><AiFillSetting /></div>
                                 <div>Settings</div>
                                 </div>
-                            </li>
+                            </li> */}
                             <li className="px-2 py-1 hover:bg-gray-200 rounded-md cursor-pointer w-full w-full">
                                 <div onClick={logout} className="flex flex-row items-center">
                                 <div  className="text-lg pr-2"><RiLogoutBoxRFill /></div>

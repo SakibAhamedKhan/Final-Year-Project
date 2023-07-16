@@ -14,6 +14,8 @@ import PaperPublishDraftView from '../paperPublishDraft/paperPublishDraftView';
 import PublishedPaperView from '../profile/publishedPaperView';
 import ProfileViewed from '../profile/profileViewed';
 import SearchPeople from '../people/searchPeople';
+import Followers from '../profile/followers';
+import Following from '../profile/following';
 
 function Home() {
     const [show, setShow] = useState(true);
@@ -40,6 +42,10 @@ function Home() {
                 <Route path='/community' element={<Community show={show} setShow={setShow}></Community>}></Route>
 
                 <Route path='/profile' element={<Profile show={show} setShow={setShow}></Profile>}></Route>
+
+                <Route path='/follower' element={<Followers show={show} setShow={setShow}></Followers>}></Route>
+
+                <Route path='/following' element={<Following show={show} setShow={setShow}></Following>}></Route>
 
                 <Route path='/userprofile/:user_id' element={<ProfileViewed show={show} setShow={setShow}></ProfileViewed>}></Route>
 

@@ -10,10 +10,10 @@ import universityList from "../../data/universityListBD";
 import universityDepartment from "../../data/universityDepartment";
 import { useEffect, useState } from "react";
 import { InfinitySpin } from "react-loader-spinner";
-import PeopleCard from "./peopleCard";
+import PeopleCard from "../people/peopleCard";
 
 
-const SearchPeople = (props) => {
+const Followers = (props) => {
     const {show, setShow} = props;
     const [user, userAuthLoaading] = userAuth();
     const navigate = useNavigate();
@@ -24,6 +24,7 @@ const SearchPeople = (props) => {
     const [department, setDepartment] = useState(null);
     const [role, setRole] = useState(null);
 
+    console.log(user);
 
     useEffect(() => {
         setLoading(true);
@@ -34,9 +35,52 @@ const SearchPeople = (props) => {
                 },
             }).then(res => res.json())
             .then(data =>{
-                setData(data.data);
-                setReserveData(data.data);
-                setLoading(false);
+                if(user){
+                    const d = data.data.filter(function(item){
+                        let flag=0;
+                        for(let i=0 ; i<user?.data?.followers.length; i++){
+                            if(user?.data?.followers[i] === item._id){
+                                flag=1;
+                                break;
+                            }
+                        }
+                        if(flag===1){
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    })
+                    setData(d);
+                    setReserveData(d);
+                    setLoading(false);
+                } else{
+                    let id = localStorage.getItem('userId');
+                    fetch(`http://localhost:8000/api/v1/user/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    }).then(res => res.json())
+                    .then(data1 => {
+                        const d = data.data.filter(function(item){
+                            let flag=0;
+                            for(let i=0 ; i<data1?.data?.followers.length; i++){
+                                if(data1?.data?.followers[i] === item._id){
+                                    flag=1;
+                                    break;
+                                }
+                            }
+                            if(flag===1){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        })
+                        setData(d);
+                        setReserveData(d);
+                        setLoading(false);
+                    })
+                }
             })
     }, []);
 
@@ -190,7 +234,7 @@ const SearchPeople = (props) => {
                                 <option value="Student">Student</option>
                             </select>
                             
-                            <a href="http://localhost:3000/people"  className="btn btn-sm btn-error ml-2 text-white">Clear Filter</a>
+                            <a href="http://localhost:3000/follower"  className="btn btn-sm btn-error ml-2 text-white">Clear Filter</a>
                         </div> 
                           
                     </div>
@@ -228,4 +272,4 @@ const SearchPeople = (props) => {
     );
 }
 
-export default SearchPeople;
+export default Followers;
