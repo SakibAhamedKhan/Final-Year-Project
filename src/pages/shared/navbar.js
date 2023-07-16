@@ -6,6 +6,7 @@ import {MdOutlineManageSearch, MdPublishedWithChanges} from 'react-icons/md'
 import {FiHelpCircle} from 'react-icons/fi'
 import {GiShadowFollower} from "react-icons/gi"
 import {RiUserFollowFill} from "react-icons/ri"
+import {AiOutlineProject} from 'react-icons/ai'
 
 function Navbar(props) {
     const {show} = props;
@@ -54,10 +55,10 @@ function Navbar(props) {
                     </div>     
                 </NavLink></li> */}
 
-                <li><NavLink to='/following' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>
+                <li><NavLink to='/govermentproject' className={`btn btn-sm my-2 ${show? 'w-44': 'w-8'} btn-outline rounded-[5px] capitalize`}>
                     <div className="flex flex-row jusity-start items-center">
-                        <div className={` ${show? 'pr-2':''}  text-lg`}><RiUserFollowFill/></div>
-                        <p className={`${show ? '':'hidden'}`}>Government Project</p>
+                        <div className={` ${show? 'pr-2':''}  text-lg`}><AiOutlineProject/></div>
+                        <p className={`${show ? '':'hidden'}`}>Govt Project</p>
                     </div>     
                 </NavLink></li>
 

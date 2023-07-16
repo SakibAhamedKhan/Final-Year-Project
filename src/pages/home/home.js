@@ -16,6 +16,7 @@ import ProfileViewed from '../profile/profileViewed';
 import SearchPeople from '../people/searchPeople';
 import Followers from '../profile/followers';
 import Following from '../profile/following';
+import GovernmentProject from '../Government/governmentProject';
 
 function Home() {
     const [show, setShow] = useState(true);
@@ -38,6 +39,7 @@ function Home() {
 
                 <Route path='/paperpublished/:published_id' element={<PublishedPaperView show={show} setShow={setShow}></PublishedPaperView>}></Route>
 
+                <Route path='/govermentproject' element={<GovernmentProject show={show} setShow={setShow}></GovernmentProject>}></Route>
 
                 <Route path='/community' element={<Community show={show} setShow={setShow}></Community>}></Route>
 
