@@ -57,6 +57,7 @@ function Login () {
         <div className="bg-gray-200 w-full h-screen flex justify-center items-center">
             <div className="drop-shadow-md">
                 <div className="card lg:card-side bg-base-100 p-4">
+                <p className='text-2xl font-semibold text-start'>Research More+</p>
                     <img className='w-72' src={loginImage} alt="" />
                     <div className="card-body">
                         <form onSubmit={handleSubmit(onSubmit)} className='px-4'>

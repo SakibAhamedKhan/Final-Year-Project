@@ -53,6 +53,7 @@ function Signup () {
         <div className="bg-gray-200 w-full h-screen flex justify-center items-center ">
             <div className="drop-shadow-md">
                 <div className="card lg:card-side bg-base-100 px-8 py-6">
+                <p className='text-2xl font-semibold text-start'>Research More+</p>
                     <img className='w-72 px-6' src={signupImage} alt="" />
                     <div className="card-body overflow-y-scroll h-[600px] pl-4">
                         <form onSubmit={handleSubmit(onSubmit)} className=''>
