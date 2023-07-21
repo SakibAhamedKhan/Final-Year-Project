@@ -16,11 +16,12 @@ import Swal from 'sweetalert2';
 import { useQuery } from 'react-query';
 import storage from '../../base';
 import { ref, uploadBytesResumable, getDownloadURL } from '@firebase/storage';
+import { TagsInput } from "react-tag-input-component";
 
 function PaperPublish(props) {
     const { register, formState: { errors }, control, handleSubmit } = useForm();
     const [publishData, setPublishData] = useState({});
-    const [part, setPart] = useState(1);
+    const [part, setPart] = useState(2);
     const {show, setShow} = props;
     const [user, userAuthLoaading] = userAuth();
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ function PaperPublish(props) {
     const [url, setUrl] = useState();
     const [saveDraftLoading, setSaveDraftLoading] = useState(false);
     const [saveLoading, setSaveLoading] = useState(false);
+    const [citation, setCitation] = useState(null);
 
     let authors = [];
     let coAuthors = [];
@@ -77,6 +79,7 @@ function PaperPublish(props) {
 
     const onSubmit = async data => {
         console.log(data);
+        
         // const file = data.file[0];
         // const storageRef = ref(storage, `/files/${file.name}`);
         // const uploadTask = uploadBytesResumable(storageRef, file);
@@ -106,6 +109,25 @@ function PaperPublish(props) {
             setPart(2);
         }
         if(part==2){
+            let citationsArray=[];
+            for(let i=0; i<citation.length; i++){
+                let str= '';
+                for(let j=citation[i].length-1; j>=0; j--){
+                    if(citation[i][j]=="/"){
+                        j=-1;
+                    }
+                    else {
+                        str = str + citation[i][j]
+                    }
+                }
+                var splitString = str.split("");
+                var reverseArray = splitString.reverse();
+                var joinArray = reverseArray.join("");
+                citation[i] = joinArray;
+            }
+            data.citationUsed=citation;
+            console.log(citation);
+            setPublishData({...publishData, ...data});
             setPart(3);
         }
     }
@@ -274,7 +296,7 @@ function PaperPublish(props) {
                     navigate('/');
                 })
                 // localStorage.setItem('userId', data.data._id);
-                
+                handleUploadSave
             }
         })  
     }
@@ -622,8 +644,15 @@ function PaperPublish(props) {
                                                 <label class="label ">
                                                     {errors.coAuthors?.type === 'required' && <span class="label-text-alt text-red-600">{errors.coAuthors.message}</span>}
                                                 </label>
-                                            </div>   
-
+                                            </div>  
+                                            
+                                            {/* citation content link */}
+                                            <TagsInput
+                                                value={citation}
+                                                onChange={setCitation}
+                                                name="citation"
+                                                placeHolder="Enter the Citation links"
+                                            />            
                                             <div class="form-control mt-2">
                                                 <button type='submit' class="btn  text-white">Next</button>
                                             </div>
@@ -642,7 +671,7 @@ function PaperPublish(props) {
                                                     saveLoading?
                                                     <button class="btn-success btn-disabled text-white my-2 px-5 py-2 rounded-[5px]">Loading...</button>
                                                     :
-                                                    <button onClick={handleUploadSave} class="btn-success text-white my-2 px-5 py-2 rounded-[5px]">Submit and Publish Now</button>
+                                                    <button onClick={submitNow} class="btn-success text-white my-2 px-5 py-2 rounded-[5px]">Submit and Publish Now</button>
                                                 }
                                                 {
                                                     saveDraftLoading?

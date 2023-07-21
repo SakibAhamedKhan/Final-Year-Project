@@ -39,6 +39,7 @@ const PaperPublishDraftCard  = (props) => {
             volumn: data.volumn,
             authors: data.authors,
             coAuthors: data.coAuthors,
+            citationUsed: data.citationUsed,
         }
         fetch(`http://localhost:8000/api/v1/published-paper/submit`,{
             method: 'POST',

@@ -46,6 +46,7 @@ function PaperPublishDraftView(props) {
     const [author, setAuthor] = useState([]);
     const [coAuthor, setCoAuthor] = useState([]);
     const [data, setData] = useState({});
+    const [citationNumbers, setCitationNumbers] = useState()
 
     console.log(draft_id);
 
@@ -85,6 +86,7 @@ function PaperPublishDraftView(props) {
             setPageStart(data.data.pageStart);
             setPageEnd(data.data.pageEnd);
             setVolumn(data.data.volumn);
+            setCitationNumbers(data.data.citations.length);
             // setAuthor(data.data.authors);
             // setCoAuthor(data.data.coAuthors);
         })  
@@ -513,6 +515,10 @@ function PaperPublishDraftView(props) {
                                         {errors.coAuthors?.type === 'required' && <span class="label-text-alt text-red-600">{errors.coAuthors.message}</span>}
                                     </label>
                                 </div>  */}
+
+                                <div>
+                                    Citations Added: {citationNumbers}
+                                </div>
                                 <div className="my-2">
                                 <h2 className="bg-blue-200  w-fit rounded-md px-2 py-[3px] text-black inline">Authors: </h2> 
                                 </div>
