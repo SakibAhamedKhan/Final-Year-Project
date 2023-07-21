@@ -132,7 +132,7 @@ const PaperPublishDraftCard  = (props) => {
                     <div className="card-actions w-fit">
                         <button className="btn btn-sm btn-warning" onClick={() => navigate(`/paperpublishdraft/${data._id}`)}><BiShow className="text-xl mr-1"/> View</button>
                         <button onClick={handlePublishConformation} className="btn btn-sm btn-accent">Publish</button>
-                        <button onClick={handleDeleteConformation} className="btn btn-sm btn-error">Delete</button>
+                        <button onClick={handleDeleteConformation} className="btn btn-sm btn-error text-white">Delete</button>
                     </div>
                 </div>
             </div>

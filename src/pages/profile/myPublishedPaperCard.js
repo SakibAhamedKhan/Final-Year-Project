@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import ConvertTime from "../paperSearch/converttime"
 import AuthorShow from "../shared/authorShow";
+import { useState } from "react";
+import CitationSHow from "./citationShow";
 
 const MyPublishedPaperCard  = (props) => {
     const {data, index, ModalShow, refetch} = props;
     const navigate = useNavigate();
-
+    const [citationCount, setCitationCount] = useState(data.citations.length);
     
     const handleDelete = () => {
         fetch(`http://localhost:8000/api/v1/publish-paper-draft/remove-draft/${data._id}`,{
@@ -71,6 +73,8 @@ const MyPublishedPaperCard  = (props) => {
                         <h2 className="bg-green-200  w-fit rounded-md px-2 py-[1px] my-1 text-gray-500">{data.researchPaperType}</h2>
                         <p>Journal: {data.journalList}</p>
                         <div className="flex items-center my-1"><p className="text-sm mr-2 mt-[-2px]">Published here: </p><ConvertTime date={data.createdAt} ></ConvertTime></div>
+
+                        <CitationSHow data={data} citationCount={citationCount}/>
 
                         <div className="my-2">
                             <h2 className="bg-blue-200  w-fit rounded-md px-2 py-[3px] text-black inline">Authors: </h2> 

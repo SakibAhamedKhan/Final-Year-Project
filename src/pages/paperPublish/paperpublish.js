@@ -21,7 +21,7 @@ import { TagsInput } from "react-tag-input-component";
 function PaperPublish(props) {
     const { register, formState: { errors }, control, handleSubmit } = useForm();
     const [publishData, setPublishData] = useState({});
-    const [part, setPart] = useState(2);
+    const [part, setPart] = useState(1);
     const {show, setShow} = props;
     const [user, userAuthLoaading] = userAuth();
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ function PaperPublish(props) {
     const [saveDraftLoading, setSaveDraftLoading] = useState(false);
     const [saveLoading, setSaveLoading] = useState(false);
     const [citation, setCitation] = useState(null);
-
+    
     let authors = [];
     let coAuthors = [];
 
