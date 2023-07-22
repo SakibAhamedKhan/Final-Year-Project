@@ -13,7 +13,6 @@ import Select from 'react-select';
 import researchPaperType from '../../data/researchPaperType'
 import journalList from '../../data/journalList';
 import Swal from 'sweetalert2';
-import PaperPublishDraftCard from './paperPublishDraftCard';
 import {IoArrowBackCircleSharp} from "react-icons/io5"
 import { useQuery } from 'react-query';
 import AuthorShow from '../shared/authorShow';
@@ -22,11 +21,13 @@ import { Viewer } from '@react-pdf-viewer/core';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import AdminLoadingPage from '../shared/AdminLoadingPage';
+import { InfinitySpin } from 'react-loader-spinner';
 
 
-function PaperPublishDraftView(props) {
+function AdminPaperApprovalCardView(props) {
     const { register, formState: { errors }, control, handleSubmit } = useForm();
-    const { draft_id } = useParams();
+    const { paper_id } = useParams();
     const [draftViewData, setDraftViewData] = useState({});
     const navigate = useNavigate();
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
@@ -47,13 +48,14 @@ function PaperPublishDraftView(props) {
     const [coAuthor, setCoAuthor] = useState([]);
     const [data, setData] = useState({});
     const [citationNumbers, setCitationNumbers] = useState()
+    const [loading, setLoading] = useState(false);
 
-    console.log(draft_id);
+    console.log(paper_id);
 
     let authors = [];
     let coAuthors = [];
     
-    const {data: authorData, isLoading: authorDataLoaading, refetch} = useQuery('authorDataAuth2', () => {
+    const {data: authorData, isLoading: authorDataLoaading, refetch} = useQuery('authorDataAuth23', () => {
         return  fetch(`http://localhost:8000/api/v1/user/authors/selection`, {
                 method: 'GET',
                 headers: {
@@ -64,7 +66,8 @@ function PaperPublishDraftView(props) {
     
    
     useEffect(() => {
-        fetch(`http://localhost:8000/api/v1/publish-paper-draft/get-draft/${draft_id}`,{
+        setLoading(true);
+        fetch(`http://localhost:8000/api/v1/published-paper/get-published-paper/${paper_id}`,{
             method: 'GET',
             headers:{
                 'content-type':'application/json'
@@ -89,11 +92,19 @@ function PaperPublishDraftView(props) {
             setCitationNumbers(data.data.citations.length);
             // setAuthor(data.data.authors);
             // setCoAuthor(data.data.coAuthors);
+            setLoading(false);
         })  
     },[])
 
-    if(authorDataLoaading){
-        return <UserAuthLoadingPage/>
+    if(authorDataLoaading || loading){
+         return (
+            <div className="flex justify-center items-center">
+            <InfinitySpin
+                width='200'
+                color="#4fa94d"
+            />
+        </div>
+         )
     }
 
 
@@ -299,7 +310,7 @@ function PaperPublishDraftView(props) {
                 {
                     draftViewData?
                     <div className="card bg-base-100 w-[900px] drop-shadow-md p-10">
-                        <button onClick={() => navigate('/paperpublishdraft')} className='btn btn-warning w-[100px] mt-6 mx-6'><IoArrowBackCircleSharp className='text-xl mr-1'/>  Back </button>
+                        <button onClick={()=>history.back()} className='btn btn-warning w-[100px] mt-6 mx-6'><IoArrowBackCircleSharp className='text-xl mr-1'/>  Back </button>
                         <div className="card-body">
                             {/* <form className=''> */}
                                 {/* Title */}
@@ -557,4 +568,4 @@ function PaperPublishDraftView(props) {
     );
 }
 
-export default PaperPublishDraftView;
+export default AdminPaperApprovalCardView;

@@ -180,7 +180,7 @@ const Followers = (props) => {
     if(userAuthLoaading==false){
         if(user?.status=='fail'){
             console.log("DOne done ");
-            return <ToLoginAlert show={show} setShow={setShow} message={`Please login to see news feed page!`}/>
+            return <ToLoginAlert show={show} setShow={setShow} message={`Please login to see this page!`}/>
         }
     } else {
         return (

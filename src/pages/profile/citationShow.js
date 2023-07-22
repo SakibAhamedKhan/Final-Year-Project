@@ -17,7 +17,7 @@ const CitationSHow = (props) => {
           transform: 'translate(-50%, -50%)',
           borderRadius: '10px',
           padding: '30px',
-          width: '600px',
+        //   width: '600px',
         },
       };
 

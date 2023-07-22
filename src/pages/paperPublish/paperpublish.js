@@ -51,7 +51,7 @@ function PaperPublish(props) {
     if(userAuthLoaading==false){
         if(user?.status=='fail'){
             console.log("DOne done ");
-            return <ToLoginAlert show={show} setShow={setShow} message={`Please login to see publish paper page!`}/>
+            return <ToLoginAlert show={show} setShow={setShow} message={`Please login to see page!`}/>
         }
     } else {
         return (

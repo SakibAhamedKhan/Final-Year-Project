@@ -13,21 +13,21 @@ import Select from 'react-select';
 import researchPaperType from '../../data/researchPaperType'
 import journalList from '../../data/journalList';
 import Swal from 'sweetalert2';
-import PaperPublishDraftCard from './paperPublishDraftCard';
 import { useQuery } from 'react-query';
+import PendingPaperCard from './pendingPaperCard';
 
-function PaperPublishDraft(props) {
+function PendingPaper(props) {
     const {show, setShow} = props;
     const [user, userAuthLoaading] = userAuth();
     const [modalIndex, setModalIndex] = useState();
     const [modalData, setModalData] = useState({});
-    // const [draftData, setDraftData] = useState([]);
+    // const [paperData, setDraftData] = useState([]);
     const navigate = useNavigate();
 
 
-    const {data:draftData, isLoading, refetch} = useQuery('draftData', () => {
+    const {data:paperData, isLoading, refetch} = useQuery('paperData33', () => {
         let id = localStorage.getItem('userId');
-        return  fetch(`http://localhost:8000/api/v1/publish-paper-draft/${id}`,{
+        return  fetch(`http://localhost:8000/api/v1/published-paper/pendingapproval/${id}`,{
             method: 'GET',
             headers:{
                 'content-type':'application/json'
@@ -74,7 +74,7 @@ function PaperPublishDraft(props) {
 
    
     
-    console.log(draftData.data.length);
+    console.log(paperData.data.length);
 
 
     return (
@@ -90,24 +90,14 @@ function PaperPublishDraft(props) {
                 <div className="px-8 pt-16 pb-2 flex flex-col overflow-y-scroll h-screen">
                     {/* <h2 className="text-center font-bold text-xl">Publish Your Paper</h2> */}
                     {
-                        (draftData?.data?.length) ?
+                        (paperData?.data?.length) ?
 
-                        draftData?.data.map((d, index) => <PaperPublishDraftCard data={d} index={index} ModalShow={ModalShow} refetch={refetch} />)
+                        paperData?.data.map((d, index) => <PendingPaperCard data={d} index={index}  refetch={refetch} />)
                         
                         :
                         
-                        <div className='text-2xl mt-6 text-center text-blue-500'>No publish paper added in draft! </div>
+                        <div className='text-2xl mt-6 text-center text-blue-500'>No pending paper! </div>
                     }
-                        {/* Modal */}
-                        {/* Put this part before </body> tag */}
-                        <input type="checkbox" id={modalIndex} className="modal-toggle" />
-                        <div className="modal">
-                            <div className="modal-box">
-                                <h3 className="text-lg font-bold">{modalData.researchPaperType}</h3>
-                                <p className="py-4">This modal works with a hidden checkbox!</p>
-                                <label className="modal-backdrop" htmlFor={modalIndex}>Close</label>
-                            </div>
-                        </div>
                 </div>
             </div>
         </div>
@@ -115,4 +105,4 @@ function PaperPublishDraft(props) {
     );
 }
 
-export default PaperPublishDraft;
+export default PendingPaper;

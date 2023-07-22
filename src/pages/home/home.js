@@ -17,6 +17,9 @@ import SearchPeople from '../people/searchPeople';
 import Followers from '../profile/followers';
 import Following from '../profile/following';
 import GovernmentProject from '../Government/governmentProject';
+import AdminHome from '../admin/adminHome';
+import AdminPaperApprovalCardView from '../admin/adminPaperApprovalView';
+import PendingPaper from '../pendingPaper/pendingPaper';
 
 function Home() {
     const [show, setShow] = useState(true);
@@ -34,6 +37,8 @@ function Home() {
                 <Route path='/paperpublish' element={<PaperPublish show={show} setShow={setShow}></PaperPublish>}></Route>
 
                 <Route path='/paperpublishdraft' element={<PaperPublishDraft show={show} setShow={setShow}></PaperPublishDraft>}></Route>
+
+                <Route path='/pendingpaper' element={<PendingPaper show={show} setShow={setShow}></PendingPaper>}></Route>
 
                 <Route path='/paperpublishdraft/:draft_id' element={<PaperPublishDraftView show={show} setShow={setShow}></PaperPublishDraftView>}></Route>
 
@@ -54,6 +59,12 @@ function Home() {
                 <Route path='/login' element={<Login></Login>}></Route>
 
                 <Route path='/signup' element={<Signup></Signup>}></Route>
+
+
+                {/* admin */}
+                <Route path='/admin' element={<AdminHome show={show} setShow={setShow} ></AdminHome>}></Route>
+                <Route path='/paperapprovalview/:paper_id' element={<AdminPaperApprovalCardView show={show} setShow={setShow}></AdminPaperApprovalCardView>}></Route>
+
             </Routes>
         </div>
     );

@@ -11,12 +11,16 @@ const CitationList = (props) => {
                 },
             }).then(res => res.json())
         })
-    console.log(paperData);
+    if(paperData?.data === null){
+        return (<></>)
+    }
 
     return (
-        <a href={`http://localhost:3000/paperpublished/${data.paperId}`} className="border px-4 py-2 bg-blue-100 rounded-md hover:bg-blue-800 hover:text-white cursor-pointer my-2">
-        {index+1}. {paperData?.data?.title}
-        </a>
+        <div className="my-6">
+            <a href={`http://localhost:3000/paperpublished/${data.paperId}`} className="border px-4 py-2 bg-blue-100 rounded-md hover:bg-blue-800 hover:text-white cursor-pointer my-2">
+            {index+1}. {paperData?.data?.title}
+            </a>
+        </div>
     )
 }
 

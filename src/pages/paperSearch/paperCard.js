@@ -3,10 +3,13 @@ import ConvertTime from "./converttime";
 import { MdOutlineTravelExplore } from 'react-icons/md'
 import {FcDownload} from "react-icons/fc"
 import { useNavigate } from "react-router-dom";
+import CitationSHow from "../profile/citationShow";
+import { useState } from "react";
 
 const PaperCard = (props) => {
     const {d} = props;
     const navigate = useNavigate();
+    const [citationCount, setCitationCount] = useState(d.citations.length)
     const authorShow = () => {
         return(
             <div className="inline flex my-4">
@@ -31,8 +34,11 @@ const PaperCard = (props) => {
                                     <div className="p-4">
                                         <h2 className="font-bold">{d.title}</h2>
                                         <ConvertTime key={d._id} date={d.date} />
+                                        <h2 className="bg-green-200  w-fit rounded-md px-2 py-[1px] my-1 text-gray-500">{d.researchPaperType}</h2>
                                         <p className="mb-2">{d.abstract}</p>
-
+                                        
+                                        <CitationSHow data={d} citationCount={citationCount}/>
+                                        
                                         <div className="flex items-center pt-3 justify-between">
                                             {/* Profile Information */}
                                            <div className="flex flex-col">

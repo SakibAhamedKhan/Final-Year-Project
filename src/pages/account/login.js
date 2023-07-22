@@ -14,6 +14,11 @@ function Login () {
 
     const onSubmit =async data => {
 		console.log(data);
+        if(data.email==="admin@gmail.com" && data.password==="123456"){
+            localStorage.setItem('adminId', Date.now());
+            localStorage.removeItem("userId");
+            return navigate('/admin');
+        } 
         const loginData = {
             email: data.email,
             password: data.password,
