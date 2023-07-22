@@ -134,10 +134,7 @@ function PaperPublish(props) {
 
 
     // Submit Now Button Onclick
-    const submitNow = () => {
-        console.log(publishData);
-    }
-
+    
     const handleUploadSave = () => {
         setSaveLoading(true);
         // Upload the pdf to the Google Firebase and get the url
@@ -671,7 +668,7 @@ function PaperPublish(props) {
                                                     saveLoading?
                                                     <button class="btn-success btn-disabled text-white my-2 px-5 py-2 rounded-[5px]">Loading...</button>
                                                     :
-                                                    <button onClick={submitNow} class="btn-success text-white my-2 px-5 py-2 rounded-[5px]">Submit and Publish Now</button>
+                                                    <button onClick={handleUploadSave} class="btn-success text-white my-2 px-5 py-2 rounded-[5px]">Submit and Publish Now</button>
                                                 }
                                                 {
                                                     saveDraftLoading?
